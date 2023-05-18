@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://UI/UI.cs" type="Script" id=1]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="ScoreLabel" type="Label" parent="."]
+margin_left = 10.0
+margin_top = 10.0
+text = "Score: 0"
+
+[node name="AmmoLabel" type="Label" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = -20.0
+text = "Rounds: 30/30"
+
+[node name="SpawnRateLabel" type="Label" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -370.0
+margin_top = 10.0
+margin_bottom = 14.0
+text = "Current zombie spawn rate: 1.00 zombies per second"
+
+[node name="DeathScreen" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.388235, 0.27451, 0.27451, 0.392157 )
+
+[node name="DiedLabel" type="Label" parent="DeathScreen"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -55.0
+margin_top = -15.5
+margin_right = 55.0
+margin_bottom = 15.5
+text = "You died!
+Press Esc for menu
+Press R to restart"
+align = 1
+valign = 1
+
+[node name="PauseScreen" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.270588, 0.270588, 0.270588, 0.392157 )
+
+[node name="PausedLabel" type="Label" parent="PauseScreen"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -119.0
+margin_top = -24.0
+margin_right = 119.0
+margin_bottom = 24.0
+text = "The game is paused.
+Press M for menu (restarts the game)
+Press Esc to unpause"
+align = 1
+valign = 1
