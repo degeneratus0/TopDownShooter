@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://6c87y8aw01tr"]
+
+[ext_resource type="Script" path="res://Entities/Weapons/WeaponAR.cs" id="1_6outo"]
+[ext_resource type="Texture2D" uid="uid://dd7us5vnj8dnt" path="res://Assets/Arts/Weapons/AR.png" id="1_rr6py"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bn2vd"]
+size = Vector2(16, 16)
+
+[node name="WeaponAR" type="Area2D"]
+z_as_relative = false
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+script = ExtResource("1_6outo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_bn2vd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rr6py")

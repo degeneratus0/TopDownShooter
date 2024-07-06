@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/ZombieAttack-2.wav-6df45d06cb88d05d7d716ae477f66919.sample"
+type="AudioStreamWAV"
+uid="uid://bjd1hx3r17u36"
+path="res://.godot/imported/ZombieAttack-2.wav-6df45d06cb88d05d7d716ae477f66919.sample"
 
 [deps]
 
 source_file="res://Assets/Sounds/Zombies/ZombieAttack-2.wav"
-dest_files=[ "res://.import/ZombieAttack-2.wav-6df45d06cb88d05d7d716ae477f66919.sample" ]
+dest_files=["res://.godot/imported/ZombieAttack-2.wav-6df45d06cb88d05d7d716ae477f66919.sample"]
 
 [params]
 

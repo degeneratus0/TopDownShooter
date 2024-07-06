@@ -1,49 +1,61 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=3 uid="uid://bmluayaiogl5r"]
 
-[ext_resource path="res://Assets/Sounds/8bit Bossa.mp3" type="AudioStream" id=1]
-[ext_resource path="res://UI/MainMenu.cs" type="Script" id=2]
-[ext_resource path="res://UI/WeaponSelectionMenuButton.cs" type="Script" id=3]
+[ext_resource type="AudioStream" uid="uid://cf7w1tnhivwa2" path="res://Assets/Sounds/8bit Bossa.mp3" id="1"]
+[ext_resource type="Script" path="res://UI/MainMenu.cs" id="2"]
+[ext_resource type="Theme" uid="uid://bf83eqviyqc74" path="res://Theme.tres" id="3_8ilbk"]
 
-[sub_resource type="InputEventAction" id=1]
-action = "reload"
+[sub_resource type="InputEventKey" id="InputEventKey_0j6it"]
+device = -1
+keycode = 82
+unicode = 114
 
-[sub_resource type="ShortCut" id=2]
-shortcut = SubResource( 1 )
+[sub_resource type="Shortcut" id="2"]
+events = [SubResource("InputEventKey_0j6it")]
 
-[sub_resource type="InputEventAction" id=3]
-action = "quit"
+[sub_resource type="InputEventKey" id="InputEventKey_n17mb"]
+device = -1
+keycode = 4194305
 
-[sub_resource type="ShortCut" id=4]
-shortcut = SubResource( 3 )
+[sub_resource type="Shortcut" id="4"]
+events = [SubResource("InputEventKey_n17mb")]
 
-[sub_resource type="Theme" id=5]
+[sub_resource type="Theme" id="5"]
 
-[sub_resource type="InputEventAction" id=6]
-action = "quit"
-
-[sub_resource type="ShortCut" id=7]
-shortcut = SubResource( 6 )
+[sub_resource type="Shortcut" id="7"]
 
 [node name="MainMenu" type="Control"]
-pause_mode = 2
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 2 )
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2")
 
 [node name="StartScreen" type="ColorRect" parent="."]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.12549, 0.12549, 0.12549, 1 )
+color = Color(0.12549, 0.12549, 0.12549, 1)
 
-[node name="Instructions" type="Label" parent="StartScreen"]
+[node name="VBoxContainer" type="VBoxContainer" parent="StartScreen"]
+layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -104.0
-margin_top = -136.0
-margin_right = 103.0
-margin_bottom = -20.0
+offset_left = -90.0
+offset_top = -161.0
+offset_right = 90.0
+offset_bottom = 161.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Instructions" type="Label" parent="StartScreen/VBoxContainer"]
+layout_mode = 2
 text = "WASD to move
 LMB to shoot
 RMB for melee
@@ -51,509 +63,406 @@ R to reload
 Q for laser sight
 F12 to toggle fullscreen
 Esc to pause"
-align = 1
-valign = 1
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="StartButton" type="Button" parent="StartScreen"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -104.0
-margin_top = -8.0
-margin_right = 104.0
-margin_bottom = 16.0
+[node name="VBoxContainer" type="VBoxContainer" parent="StartScreen/VBoxContainer"]
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="StartScreen/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+shortcut = SubResource("2")
 shortcut_in_tooltip = false
-shortcut = SubResource( 2 )
 text = "Press to start (R)"
 
-[node name="OptionsButton" type="Button" parent="StartScreen"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -104.0
-margin_top = 24.0
-margin_right = 104.0
-margin_bottom = 48.0
+[node name="OptionsButton" type="Button" parent="StartScreen/VBoxContainer/VBoxContainer"]
+layout_mode = 2
 text = "Options"
 
-[node name="QuitButton" type="Button" parent="StartScreen"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -104.0
-margin_top = 56.0
-margin_right = 104.0
-margin_bottom = 80.0
+[node name="QuitButton" type="Button" parent="StartScreen/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+shortcut = SubResource("4")
 shortcut_in_tooltip = false
-shortcut = SubResource( 4 )
 text = "Quit (Esc)"
 
-[node name="WeaponSelectionMenuButton" type="MenuButton" parent="StartScreen"]
-margin_left = 536.0
-margin_top = 464.0
-margin_right = 744.0
-margin_bottom = 484.0
-theme = SubResource( 5 )
+[node name="WeaponSelectionMenuButton" type="MenuButton" parent="StartScreen/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("5")
 text = "Select a weapon"
 flat = false
-script = ExtResource( 3 )
 
 [node name="OptionsScreen" type="ColorRect" parent="."]
 visible = false
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.12549, 0.12549, 0.12549, 1 )
+color = Color(0.12549, 0.12549, 0.12549, 1)
 
-[node name="OptionsLabel" type="Label" parent="OptionsScreen"]
-margin_left = 608.0
-margin_top = 128.0
-margin_right = 673.0
-margin_bottom = 142.0
+[node name="VBox" type="VBoxContainer" parent="OptionsScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -61.5
+offset_top = -47.5
+offset_right = 61.5
+offset_bottom = 47.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OptionsLabel" type="Label" parent="OptionsScreen/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
 text = "Options"
-align = 1
 
-[node name="DifficultyOptionsLabel" type="Label" parent="OptionsScreen"]
-margin_left = 464.0
-margin_top = 160.0
-margin_right = 521.0
-margin_bottom = 174.0
+[node name="HBox" type="HBoxContainer" parent="OptionsScreen/VBox"]
+layout_mode = 2
+
+[node name="VBoxDifficulty" type="VBoxContainer" parent="OptionsScreen/VBox/HBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="DifficultyOptionsLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxDifficulty"]
+layout_mode = 2
+size_flags_horizontal = 4
 text = "Difficulty"
 
-[node name="PlayerOptionsLabel" type="Label" parent="OptionsScreen"]
-margin_left = 768.0
-margin_top = 160.0
-margin_right = 808.0
-margin_bottom = 174.0
-text = "Player"
+[node name="Panel" type="PanelContainer" parent="OptionsScreen/VBox/HBox/VBoxDifficulty"]
+custom_minimum_size = Vector2(400, 450)
+layout_mode = 2
 
-[node name="DifficultyOptionsPanel" type="Panel" parent="OptionsScreen"]
-margin_left = 352.0
-margin_top = 184.0
-margin_right = 632.0
-margin_bottom = 552.0
+[node name="Margin" type="MarginContainer" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="ZombieSpawnRateLabel" type="Label" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 16.0
-margin_top = 16.0
-margin_right = 55.0
-margin_bottom = 30.0
-hint_tooltip = "How much zombies will spawn in one second at start"
+[node name="HBox" type="HBoxContainer" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin"]
+layout_mode = 2
+
+[node name="VBoxLabels" type="VBoxContainer" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 10
+
+[node name="ZombieSpawnRateLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+size_flags_vertical = 1
+tooltip_text = "How much zombies will spawn in one second at start"
 mouse_filter = 1
 text = "Zombie Spawn Rate"
-valign = 1
 
-[node name="ZombieSpawnRateSpinBox" type="SpinBox" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 168.0
-margin_top = 8.0
-margin_right = 268.0
-margin_bottom = 32.0
+[node name="SpawnRateIncrementLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+tooltip_text = "How much more zombies will spawn per second after increment (relatively to spawn rate of 1)"
+mouse_filter = 1
+text = "Spawn Rate Increment"
+
+[node name="ZombiesToIncLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+tooltip_text = "How much zombies need to be spawned to increase spawn rate"
+mouse_filter = 1
+text = "Zombies To Increment"
+
+[node name="MaxSpawnRateLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+text = "Max Spawn Rate"
+
+[node name="ZombieMinSpeedLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+text = "Zombie Min Speed"
+
+[node name="ZombieMaxSpeedLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+text = "Zombie Max Speed"
+
+[node name="DropChanceLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+text = "Drop Chance"
+
+[node name="ShowSpawnRateLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+mouse_filter = 1
+text = "Show Spawn Rate"
+
+[node name="VBoxInputs" type="VBoxContainer" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 5
+
+[node name="ZombieSpawnRateSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 step = 0.1
 value = 1.0
 allow_greater = true
 
-[node name="SpawnRateIncrementLabel" type="Label" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 16.0
-margin_top = 48.0
-margin_right = 55.0
-margin_bottom = 62.0
-hint_tooltip = "How much more zombies will spawn per second after increment (relatively to spawn rate of 1)"
-mouse_filter = 1
-text = "Spawn Rate Increment"
-valign = 1
-
-[node name="SpawnRateIncrementSpinBox" type="SpinBox" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 168.0
-margin_top = 40.0
-margin_right = 268.0
-margin_bottom = 64.0
+[node name="SpawnRateIncrementSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 value = 2.0
 rounded = true
 suffix = "%"
 
-[node name="ZombiesToIncLabel" type="Label" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 16.0
-margin_top = 80.0
-margin_right = 162.0
-margin_bottom = 94.0
-hint_tooltip = "How much zombies need to be spawned to increase spawn rate"
-mouse_filter = 1
-text = "Zombies To Increment"
-valign = 1
-
-[node name="ZombiesToIncSpinBox" type="SpinBox" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 168.0
-margin_top = 72.0
-margin_right = 268.0
-margin_bottom = 96.0
+[node name="ZombiesToIncSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 min_value = 1.0
 value = 5.0
 rounded = true
 allow_greater = true
 
-[node name="MaxSpawnRateLabel" type="Label" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 16.0
-margin_top = 112.0
-margin_right = 118.0
-margin_bottom = 126.0
-text = "Max Spawn Rate"
-valign = 1
-
-[node name="MaxSpawnRateSpinBox" type="SpinBox" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 168.0
-margin_top = 104.0
-margin_right = 268.0
-margin_bottom = 128.0
+[node name="MaxSpawnRateSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 min_value = 1.0
 step = 0.1
 value = 10.0
 allow_greater = true
 
-[node name="ZombieMinSpeedLabel" type="Label" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 16.0
-margin_top = 144.0
-margin_right = 55.0
-margin_bottom = 158.0
-text = "Zombie Min Speed"
-valign = 1
-
-[node name="ZombieMinSpeedSpinBox" type="SpinBox" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 168.0
-margin_top = 136.0
-margin_right = 268.0
-margin_bottom = 160.0
+[node name="ZombieMinSpeedSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 max_value = 1000.0
 value = 100.0
 rounded = true
 allow_greater = true
 
-[node name="ZombieMaxSpeedLabel" type="Label" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 16.0
-margin_top = 176.0
-margin_right = 55.0
-margin_bottom = 190.0
-text = "Zombie Max Speed"
-valign = 1
-
-[node name="ZombieMaxSpeedSpinBox" type="SpinBox" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 168.0
-margin_top = 168.0
-margin_right = 268.0
-margin_bottom = 192.0
+[node name="ZombieMaxSpeedSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 max_value = 1000.0
 value = 200.0
 rounded = true
 allow_greater = true
 
-[node name="DropChanceLabel" type="Label" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 16.0
-margin_top = 208.0
-margin_right = 55.0
-margin_bottom = 222.0
-text = "Drop Chance"
-valign = 1
-
-[node name="DropChanceSpinBox" type="SpinBox" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 168.0
-margin_top = 200.0
-margin_right = 268.0
-margin_bottom = 224.0
+[node name="DropChanceSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 value = 10.0
 rounded = true
 suffix = "%"
 
-[node name="ShowSpawnRateLabel" type="Label" parent="OptionsScreen/DifficultyOptionsPanel"]
-anchor_right = 0.025
-anchor_bottom = 0.03
-margin_left = 16.0
-margin_top = 238.0
-margin_right = 115.0
-margin_bottom = 245.28
-mouse_filter = 1
-text = "Show Spawn Rate"
-valign = 1
+[node name="ShowSpawnRateCheckBox" type="CheckBox" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme = ExtResource("3_8ilbk")
 
-[node name="ShowSpawnRateCheckBox" type="CheckBox" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 163.0
-margin_top = 232.0
-margin_right = 187.0
-margin_bottom = 256.0
-
-[node name="ResetDifficultyDefaultButton" type="Button" parent="OptionsScreen/DifficultyOptionsPanel"]
-margin_left = 16.0
-margin_top = 336.0
-margin_right = 264.0
-margin_bottom = 356.0
+[node name="ResetDifficultyDefaultButton" type="Button" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
 text = "Reset Default"
 
-[node name="PlayerOptionsPanel" type="Panel" parent="OptionsScreen"]
-margin_left = 648.0
-margin_top = 184.0
-margin_right = 928.0
-margin_bottom = 552.0
+[node name="VBoxPlayer" type="VBoxContainer" parent="OptionsScreen/VBox/HBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="SpeedLabel" type="Label" parent="OptionsScreen/PlayerOptionsPanel"]
-margin_left = 16.0
-margin_top = 16.0
-margin_right = 55.0
-margin_bottom = 30.0
+[node name="PlayerOptionsLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxPlayer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Player"
+
+[node name="Panel" type="PanelContainer" parent="OptionsScreen/VBox/HBox/VBoxPlayer"]
+custom_minimum_size = Vector2(400, 450)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBox" type="HBoxContainer" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin"]
+layout_mode = 2
+
+[node name="VBoxLabels" type="VBoxContainer" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SpeedLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
 text = "Speed"
-valign = 1
 
-[node name="SpeedSpinBox" type="SpinBox" parent="OptionsScreen/PlayerOptionsPanel"]
-margin_left = 168.0
-margin_top = 8.0
-margin_right = 268.0
-margin_bottom = 32.0
+[node name="FireRateLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+tooltip_text = "Shots per minute"
+mouse_filter = 1
+text = "Fire Rate"
+
+[node name="ClipSizeLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+tooltip_text = "Amount of bullets that can be fired before reload"
+mouse_filter = 1
+text = "Clip size"
+
+[node name="AmmoLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+tooltip_text = "Starting ammo"
+mouse_filter = 1
+text = "Ammo"
+
+[node name="ReloadTimeLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+mouse_filter = 1
+text = "Reload Time"
+
+[node name="SpreadingLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+tooltip_text = "How many degrees can bullet angle deviate from shot position"
+mouse_filter = 1
+text = "Spreading"
+
+[node name="BulletsPerShotLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+tooltip_text = "How much bullets emits after each shot"
+mouse_filter = 1
+text = "Bullets Per Shot"
+
+[node name="BulletSpeedLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+mouse_filter = 1
+text = "Bullet Speed"
+
+[node name="BulSpeedRandLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+tooltip_text = "How much bullets can vary in speed"
+mouse_filter = 1
+text = "Bullet Speed Rand."
+
+[node name="DamageLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+mouse_filter = 1
+text = "Damage"
+
+[node name="InvincibleLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxLabels"]
+layout_mode = 2
+mouse_filter = 1
+text = "Invincible Player"
+
+[node name="VBoxInputs" type="VBoxContainer" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_constants/separation = 5
+
+[node name="SpeedSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 max_value = 1000.0
 value = 250.0
 rounded = true
 allow_greater = true
 
-[node name="FireRateLabel" type="Label" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 0.025
-anchor_bottom = 0.03
-margin_left = 16.0
-margin_top = 48.0
-margin_right = 66.8
-margin_bottom = 55.28
-hint_tooltip = "Shots per minute"
-mouse_filter = 1
-text = "Fire Rate"
-valign = 1
-
-[node name="FireRateSpinBox" type="SpinBox" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 1.0
-margin_left = 168.0
-margin_top = 40.0
-margin_right = -12.0
-margin_bottom = 64.0
+[node name="FireRateSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 max_value = 60000.0
 step = 10.0
 value = 900.0
 rounded = true
 suffix = "rpm"
 
-[node name="ClipSizeLabel" type="Label" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 0.025
-anchor_bottom = 0.03
-margin_left = 16.0
-margin_top = 80.0
-margin_right = 66.8
-margin_bottom = 87.28
-hint_tooltip = "Amount of bullets that can be fired before reload"
-mouse_filter = 1
-text = "Clip size"
-valign = 1
-
-[node name="ClipSizeSpinBox" type="SpinBox" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 1.0
-margin_left = 168.0
-margin_top = 72.0
-margin_right = -12.0
-margin_bottom = 96.0
+[node name="ClipSizeSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 max_value = 1000.0
 value = 30.0
 rounded = true
 allow_greater = true
 
-[node name="AmmoLabel" type="Label" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 0.025
-anchor_bottom = 0.03
-margin_left = 16.0
-margin_top = 112.0
-margin_right = 66.8
-margin_bottom = 119.28
-hint_tooltip = "Starting ammo"
-mouse_filter = 1
-text = "Ammo"
-valign = 1
-
-[node name="AmmoSpinBox" type="SpinBox" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 1.0
-margin_left = 168.0
-margin_top = 104.0
-margin_right = -12.0
-margin_bottom = 128.0
+[node name="AmmoSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 max_value = 1000.0
 value = 90.0
 rounded = true
 allow_greater = true
 
-[node name="ReloadTimeLabel" type="Label" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 0.025
-anchor_bottom = 0.03
-margin_left = 16.0
-margin_top = 144.0
-margin_right = 66.8
-margin_bottom = 151.28
-mouse_filter = 1
-text = "Reload Time"
-valign = 1
-
-[node name="ReloadTimeSpinBox" type="SpinBox" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 1.0
-margin_left = 168.0
-margin_top = 136.0
-margin_right = -12.0
-margin_bottom = 160.0
+[node name="ReloadTimeSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 step = 0.1
 value = 1.5
 allow_greater = true
 suffix = "sec"
 
-[node name="SpreadingLabel" type="Label" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 0.025
-anchor_bottom = 0.03
-margin_left = 16.0
-margin_top = 176.0
-margin_right = 66.8
-margin_bottom = 183.28
-hint_tooltip = "How many degrees can bullet angle deviate from shot position"
-mouse_filter = 1
-text = "Spreading"
-valign = 1
-
-[node name="SpreadingSpinBox" type="SpinBox" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 1.0
-margin_left = 168.0
-margin_top = 168.0
-margin_right = -12.0
-margin_bottom = 192.0
+[node name="SpreadingSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 max_value = 180.0
 value = 5.0
 rounded = true
 suffix = "degrees"
 
-[node name="BulletsPerShotLabel" type="Label" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 0.025
-anchor_bottom = 0.03
-margin_left = 16.0
-margin_top = 208.0
-margin_right = 72.8
-margin_bottom = 215.28
-hint_tooltip = "How much bullets emits after each shot"
-mouse_filter = 1
-text = "Bullets Per Shot"
-valign = 1
-
-[node name="BulletsPerShotSpinBox" type="SpinBox" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 1.0
-margin_left = 168.0
-margin_top = 200.0
-margin_right = -12.0
-margin_bottom = 224.0
+[node name="BulletsPerShotSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 value = 1.0
 rounded = true
 
-[node name="BulletSpeedLabel" type="Label" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 0.025
-anchor_bottom = 0.03
-margin_left = 16.0
-margin_top = 240.0
-margin_right = 72.8
-margin_bottom = 247.28
-mouse_filter = 1
-text = "Bullet Speed"
-valign = 1
-
-[node name="BulletSpeedSpinBox" type="SpinBox" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 1.0
-margin_left = 168.0
-margin_top = 232.0
-margin_right = -12.0
-margin_bottom = 256.0
+[node name="BulletSpeedSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 max_value = 1500.0
 value = 750.0
 rounded = true
 allow_greater = true
 
-[node name="BulSpeedRandLabel" type="Label" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 0.025
-anchor_bottom = 0.03
-margin_left = 16.0
-margin_top = 272.0
-margin_right = 72.8
-margin_bottom = 279.28
-hint_tooltip = "How much bullets can vary in speed"
-mouse_filter = 1
-text = "Bullet Speed Rand."
-valign = 1
-
-[node name="BulSpeedRandSpinBox" type="SpinBox" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 1.0
-margin_left = 168.0
-margin_top = 264.0
-margin_right = -12.0
-margin_bottom = 288.0
+[node name="BulSpeedRandSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
 max_value = 1000.0
 value = 50.0
 rounded = true
 allow_greater = true
 
-[node name="InvincibleLabel" type="Label" parent="OptionsScreen/PlayerOptionsPanel"]
-anchor_right = 0.025
-anchor_bottom = 0.03
-margin_left = 16.0
-margin_top = 304.0
-margin_right = 115.0
-margin_bottom = 311.28
-mouse_filter = 1
-text = "Invincible Player"
-valign = 1
+[node name="DamageSpinBox" type="SpinBox" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
+max_value = 1000.0
+value = 10.0
+rounded = true
+allow_greater = true
+allow_lesser = true
 
-[node name="InvincibleCheckBox" type="CheckBox" parent="OptionsScreen/PlayerOptionsPanel"]
-margin_left = 163.0
-margin_top = 298.0
-margin_right = 187.0
-margin_bottom = 322.0
+[node name="InvincibleCheckBox" type="CheckBox" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs"]
+layout_mode = 2
+theme = ExtResource("3_8ilbk")
 
-[node name="ResetPlayerDefaultButton" type="Button" parent="OptionsScreen/PlayerOptionsPanel"]
-margin_left = 16.0
-margin_top = 336.0
-margin_right = 264.0
-margin_bottom = 356.0
+[node name="ResetPlayerDefaultButton" type="Button" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
 text = "Reset Default"
 
-[node name="BackButton" type="Button" parent="OptionsScreen"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -104.0
-margin_top = 224.0
-margin_right = 104.0
-margin_bottom = 248.0
-shortcut = SubResource( 7 )
+[node name="BackButton" type="Button" parent="OptionsScreen/VBox"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+shortcut = SubResource("7")
 text = "Back"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 1 )
+stream = ExtResource("1")
 autoplay = true
 
-[connection signal="pressed" from="StartScreen/StartButton" to="." method="OnStartButtonPressed"]
-[connection signal="pressed" from="StartScreen/OptionsButton" to="." method="OnOptionsButtonPressed"]
-[connection signal="pressed" from="StartScreen/QuitButton" to="." method="OnQuitButtonPressed"]
-[connection signal="value_changed" from="OptionsScreen/DifficultyOptionsPanel/ZombieSpawnRateSpinBox" to="." method="OnZombieSpawnRateChanged"]
-[connection signal="value_changed" from="OptionsScreen/DifficultyOptionsPanel/SpawnRateIncrementSpinBox" to="." method="OnSpawnRateIncrementChanged"]
-[connection signal="value_changed" from="OptionsScreen/DifficultyOptionsPanel/ZombiesToIncSpinBox" to="." method="OnZombiesToIncChanged"]
-[connection signal="value_changed" from="OptionsScreen/DifficultyOptionsPanel/MaxSpawnRateSpinBox" to="." method="OnMaxSpawnRateChanged"]
-[connection signal="value_changed" from="OptionsScreen/DifficultyOptionsPanel/ZombieMinSpeedSpinBox" to="." method="OnZombieMinSpeedChanged"]
-[connection signal="value_changed" from="OptionsScreen/DifficultyOptionsPanel/ZombieMaxSpeedSpinBox" to="." method="OnZombieMaxSpeedChanged"]
-[connection signal="value_changed" from="OptionsScreen/DifficultyOptionsPanel/DropChanceSpinBox" to="." method="OnDropChanceChanged"]
-[connection signal="toggled" from="OptionsScreen/DifficultyOptionsPanel/ShowSpawnRateCheckBox" to="." method="OnShowSpawnRateToggled"]
-[connection signal="pressed" from="OptionsScreen/DifficultyOptionsPanel/ResetDifficultyDefaultButton" to="." method="OnResetDifficultyDefaultButtonPressed"]
-[connection signal="value_changed" from="OptionsScreen/PlayerOptionsPanel/SpeedSpinBox" to="." method="OnSpeedChanged"]
-[connection signal="value_changed" from="OptionsScreen/PlayerOptionsPanel/FireRateSpinBox" to="." method="OnFireRateChanged"]
-[connection signal="value_changed" from="OptionsScreen/PlayerOptionsPanel/ClipSizeSpinBox" to="." method="OnClipSizeChanged"]
-[connection signal="value_changed" from="OptionsScreen/PlayerOptionsPanel/AmmoSpinBox" to="." method="OnAmmoChanged"]
-[connection signal="value_changed" from="OptionsScreen/PlayerOptionsPanel/ReloadTimeSpinBox" to="." method="OnReloadTimeChanged"]
-[connection signal="value_changed" from="OptionsScreen/PlayerOptionsPanel/SpreadingSpinBox" to="." method="OnSpreadingChanged"]
-[connection signal="value_changed" from="OptionsScreen/PlayerOptionsPanel/BulletsPerShotSpinBox" to="." method="OnBulletsPerShotChanged"]
-[connection signal="value_changed" from="OptionsScreen/PlayerOptionsPanel/BulletSpeedSpinBox" to="." method="OnBulletSpeedChanged"]
-[connection signal="value_changed" from="OptionsScreen/PlayerOptionsPanel/BulSpeedRandSpinBox" to="." method="OnBulSpeedRandChanged"]
-[connection signal="toggled" from="OptionsScreen/PlayerOptionsPanel/InvincibleCheckBox" to="." method="OnInvincibleToggled"]
-[connection signal="pressed" from="OptionsScreen/PlayerOptionsPanel/ResetPlayerDefaultButton" to="." method="OnResetPlayerDefaultButtonPressed"]
-[connection signal="pressed" from="OptionsScreen/BackButton" to="." method="OnBackButtonPressed"]
+[connection signal="pressed" from="StartScreen/VBoxContainer/VBoxContainer/StartButton" to="." method="OnStartButtonPressed"]
+[connection signal="pressed" from="StartScreen/VBoxContainer/VBoxContainer/OptionsButton" to="." method="OnOptionsButtonPressed"]
+[connection signal="pressed" from="StartScreen/VBoxContainer/VBoxContainer/QuitButton" to="." method="OnQuitButtonPressed"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs/ZombieSpawnRateSpinBox" to="." method="OnZombieSpawnRateChanged"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs/SpawnRateIncrementSpinBox" to="." method="OnSpawnRateIncrementChanged"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs/ZombiesToIncSpinBox" to="." method="OnZombiesToIncChanged"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs/MaxSpawnRateSpinBox" to="." method="OnMaxSpawnRateChanged"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs/ZombieMinSpeedSpinBox" to="." method="OnZombieMinSpeedChanged"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs/ZombieMaxSpeedSpinBox" to="." method="OnZombieMaxSpeedChanged"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs/DropChanceSpinBox" to="." method="OnDropChanceChanged"]
+[connection signal="toggled" from="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs/ShowSpawnRateCheckBox" to="." method="OnShowSpawnRateToggled"]
+[connection signal="pressed" from="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/ResetDifficultyDefaultButton" to="." method="OnResetDifficultyDefaultButtonPressed"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs/SpeedSpinBox" to="." method="OnSpeedChanged"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs/FireRateSpinBox" to="." method="OnFireRateChanged"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs/ClipSizeSpinBox" to="." method="OnClipSizeChanged"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs/AmmoSpinBox" to="." method="OnAmmoChanged"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs/ReloadTimeSpinBox" to="." method="OnReloadTimeChanged"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs/SpreadingSpinBox" to="." method="OnSpreadingChanged"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs/BulletsPerShotSpinBox" to="." method="OnBulletsPerShotChanged"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs/BulletSpeedSpinBox" to="." method="OnBulletSpeedChanged"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs/BulSpeedRandSpinBox" to="." method="OnBulSpeedRandChanged"]
+[connection signal="value_changed" from="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs/DamageSpinBox" to="." method="OnDamageSpinBoxValueChanged"]
+[connection signal="toggled" from="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs/InvincibleCheckBox" to="." method="OnInvincibleToggled"]
+[connection signal="pressed" from="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/ResetPlayerDefaultButton" to="." method="OnResetPlayerDefaultButtonPressed"]
+[connection signal="pressed" from="OptionsScreen/VBox/BackButton" to="." method="OnBackButtonPressed"]

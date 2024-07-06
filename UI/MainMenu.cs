@@ -1,30 +1,52 @@
 using Godot;
-using System;
 
-public class MainMenu : Control
+public partial class MainMenu : Control
 {
 	private Control StartScreen;
 	private Control OptionsScreen;
 
 	private SpinBox ammoSpinBox;
+    private MenuButton weaponButton;
+    private PopupMenu weaponPopup;
 
-	const string DifficultyOptionsPath = "OptionsScreen/DifficultyOptionsPanel/";
-	const string PlayerOptionsPath = "OptionsScreen/PlayerOptionsPanel/";
+    private const string DifficultyOptionsPath = 
+		"OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs/";
+    private const string PlayerOptionsPath =
+        "OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs/";
 
 	public override void _Ready()
 	{
 		StartScreen = GetNode<Control>("StartScreen");
 		OptionsScreen = GetNode<Control>("OptionsScreen");
 		ammoSpinBox = GetNode<SpinBox>(PlayerOptionsPath + "AmmoSpinBox");
-	}
+        weaponButton = GetNode<MenuButton>("StartScreen/VBoxContainer/WeaponSelectionMenuButton");
 
-	private void InitFields()
+        weaponPopup = weaponButton.GetPopup();
+        weaponPopup.AddItem("SMG");
+        weaponPopup.AddItem("Shotgun");
+        weaponPopup.IndexPressed += WeaponSelected;
+    }
+
+    private void WeaponSelected(long index)
+    {
+        switch (weaponPopup.GetItemText((int)index))
+        {
+            case "SMG":
+                GlobalSettings.Player.SMGPreset();
+                break;
+            case "Shotgun":
+                GlobalSettings.Player.ShotgunPreset();
+                break;
+        }
+    }
+
+    private void InitFields()
 	{
 		GetNode<SpinBox>(DifficultyOptionsPath + "ZombieSpawnRateSpinBox").Value = GlobalSettings.Difficulty.ZombieSpawnRate;
 		GetNode<SpinBox>(DifficultyOptionsPath + "SpawnRateIncrementSpinBox").Value = GlobalSettings.Difficulty.ZombieSpawnRateIncrement;
 		GetNode<SpinBox>(DifficultyOptionsPath + "ZombiesToIncSpinBox").Value = GlobalSettings.Difficulty.ZombiesToIncrement;
 		GetNode<SpinBox>(DifficultyOptionsPath + "MaxSpawnRateSpinBox").Value = GlobalSettings.Difficulty.MaxSpawnRate;
-		GetNode<CheckBox>(DifficultyOptionsPath + "ShowSpawnRateCheckBox").Pressed = GlobalSettings.Difficulty.ShowSpawnRate;
+		GetNode<CheckBox>(DifficultyOptionsPath + "ShowSpawnRateCheckBox").ButtonPressed = GlobalSettings.Difficulty.ShowSpawnRate;
 		GetNode<SpinBox>(DifficultyOptionsPath + "ZombieMinSpeedSpinBox").Value = GlobalSettings.Zombie.ZombieMinSpeed;
 		GetNode<SpinBox>(DifficultyOptionsPath + "ZombieMaxSpeedSpinBox").Value = GlobalSettings.Zombie.ZombieMaxSpeed;
 		GetNode<SpinBox>(DifficultyOptionsPath + "DropChanceSpinBox").Value = GlobalSettings.Zombie.DropChance;
@@ -32,13 +54,13 @@ public class MainMenu : Control
 		GetNode<SpinBox>(PlayerOptionsPath + "SpeedSpinBox").Value = GlobalSettings.Player.Speed;
 		GetNode<SpinBox>(PlayerOptionsPath + "FireRateSpinBox").Value = GlobalSettings.Player.FireRate;
 		GetNode<SpinBox>(PlayerOptionsPath + "ClipSizeSpinBox").Value = GlobalSettings.Player.ClipSize;
-
 		GetNode<SpinBox>(PlayerOptionsPath + "ReloadTimeSpinBox").Value = GlobalSettings.Player.ReloadTime;
 		GetNode<SpinBox>(PlayerOptionsPath + "SpreadingSpinBox").Value = GlobalSettings.Player.Spreading;
 		GetNode<SpinBox>(PlayerOptionsPath + "BulletsPerShotSpinBox").Value = GlobalSettings.Player.BulletsPerShot;
 		GetNode<SpinBox>(PlayerOptionsPath + "BulletSpeedSpinBox").Value = GlobalSettings.Player.BulletSpeed;
 		GetNode<SpinBox>(PlayerOptionsPath + "BulSpeedRandSpinBox").Value = GlobalSettings.Player.BulletSpeedRandomness;
-		GetNode<CheckBox>(PlayerOptionsPath + "InvincibleCheckBox").Pressed = GlobalSettings.Player.IsInvincible;
+        GetNode<SpinBox>(PlayerOptionsPath + "DamageSpinBox").Value = GlobalSettings.Player.Damage;
+        GetNode<CheckBox>(PlayerOptionsPath + "InvincibleCheckBox").ButtonPressed = GlobalSettings.Player.IsInvincible;
 
 		ammoSpinBox.Value = GlobalSettings.Player.Ammo;
 		ammoSpinBox.Step = GlobalSettings.Player.ClipSize;
@@ -47,14 +69,21 @@ public class MainMenu : Control
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (@event.IsActionPressed("toggle_fullscreen"))
-		{
-			OS.WindowFullscreen = !OS.WindowFullscreen;
-		}
+        {
+            if (DisplayServer.WindowGetMode() != DisplayServer.WindowMode.Fullscreen)
+            {
+                DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
+            }
+            else
+            {
+                DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+            }
+        }
 	}
 
 	public void OnStartButtonPressed()
 	{
-		GetTree().ChangeScene("res://World.tscn");
+		GetTree().ChangeSceneToFile("res://World.tscn");
 	}
 
 	public void OnQuitButtonPressed()
@@ -127,7 +156,9 @@ public class MainMenu : Control
 
 	public void OnBulSpeedRandChanged(float value) => GlobalSettings.Player.BulletSpeedRandomness = (int)value;
 
-	public void OnInvincibleToggled(bool value) => GlobalSettings.Player.IsInvincible = value;
+    public void OnDamageSpinBoxValueChanged(float value) => GlobalSettings.Player.Damage = (int)value;    
+
+    public void OnInvincibleToggled(bool value) => GlobalSettings.Player.IsInvincible = value;
 
 	public void OnResetPlayerDefaultButtonPressed()
 	{

@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/ReloadFinish.wav-f014bf86adf965b1d10513d1f20bc954.sample"
+type="AudioStreamWAV"
+uid="uid://bb0h71d5vjq2p"
+path="res://.godot/imported/ReloadFinish.wav-f014bf86adf965b1d10513d1f20bc954.sample"
 
 [deps]
 
 source_file="res://Assets/Sounds/Player/ReloadFinish.wav"
-dest_files=[ "res://.import/ReloadFinish.wav-f014bf86adf965b1d10513d1f20bc954.sample" ]
+dest_files=["res://.godot/imported/ReloadFinish.wav-f014bf86adf965b1d10513d1f20bc954.sample"]
 
 [params]
 

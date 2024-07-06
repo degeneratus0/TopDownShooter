@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/ZombieIdle-1.wav-03d4a27c2daacdeb4576ec7ce7d73a9b.sample"
+type="AudioStreamWAV"
+uid="uid://84tkgdio5wkj"
+path="res://.godot/imported/ZombieIdle-1.wav-03d4a27c2daacdeb4576ec7ce7d73a9b.sample"
 
 [deps]
 
 source_file="res://Assets/Sounds/Zombies/ZombieIdle-1.wav"
-dest_files=[ "res://.import/ZombieIdle-1.wav-03d4a27c2daacdeb4576ec7ce7d73a9b.sample" ]
+dest_files=["res://.godot/imported/ZombieIdle-1.wav-03d4a27c2daacdeb4576ec7ce7d73a9b.sample"]
 
 [params]
 

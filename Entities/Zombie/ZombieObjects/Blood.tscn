@@ -1,0 +1,97 @@
+[gd_scene load_steps=11 format=3 uid="uid://bxr2idlrh0pm1"]
+
+[ext_resource type="Texture2D" uid="uid://bll4tc83pfm0i" path="res://Assets/Arts/Zombie/BloodParticle.png" id="2_gafw7"]
+[ext_resource type="Texture2D" uid="uid://c00icm06856sv" path="res://Assets/Arts/Zombie/Blood1-64.png" id="2_qvgyh"]
+[ext_resource type="Script" path="res://Entities/Zombie/ZombieObjects/Blood.cs" id="3"]
+[ext_resource type="Texture2D" uid="uid://dotnbbh8k0htf" path="res://Assets/Arts/Zombie/Blood2-64.png" id="3_i66qg"]
+
+[sub_resource type="Curve" id="4"]
+_data = [Vector2(0, 1), 0.0, -1.56545, 0, 0, Vector2(1, 0.111364), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="5"]
+curve = SubResource("4")
+
+[sub_resource type="ParticleProcessMaterial" id="1"]
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 8.0
+scale_curve = SubResource("5")
+color = Color(0.592157, 0, 0, 1)
+
+[sub_resource type="Animation" id="2"]
+resource_name = "BloodSplatterGrowth"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BloodSplatter1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.05, 0.05), Vector2(0.5, 0.5)]
+}
+
+[sub_resource type="Animation" id="3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BloodSplatter1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.1, 0.1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x7jiu"]
+_data = {
+"BloodSplatterGrowth": SubResource("2"),
+"RESET": SubResource("3")
+}
+
+[node name="Blood" type="Node2D"]
+process_mode = 1
+z_index = -1
+z_as_relative = false
+script = ExtResource("3")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." groups=["oneShotEmitters"]]
+emitting = false
+amount = 150
+process_material = SubResource("1")
+texture = ExtResource("2_gafw7")
+lifetime = 3.0
+one_shot = true
+explosiveness = 0.9
+randomness = 0.2
+visibility_rect = Rect2(-1000, -1000, 200, 2000)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "BloodSplatterGrowth"
+libraries = {
+"": SubResource("AnimationLibrary_x7jiu")
+}
+
+[node name="BloodSplatter1" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(0.772549, 0, 0, 0.392157)
+z_index = -1
+z_as_relative = false
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_qvgyh")
+
+[node name="BloodSplatter2" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.607843)
+z_index = -1
+z_as_relative = false
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_i66qg")

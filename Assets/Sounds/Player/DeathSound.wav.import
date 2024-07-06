@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/DeathSound.wav-16bc1b2fd60b98759a4054659d09171f.sample"
+type="AudioStreamWAV"
+uid="uid://bo20qa76v5hjo"
+path="res://.godot/imported/DeathSound.wav-16bc1b2fd60b98759a4054659d09171f.sample"
 
 [deps]
 
 source_file="res://Assets/Sounds/Player/DeathSound.wav"
-dest_files=[ "res://.import/DeathSound.wav-16bc1b2fd60b98759a4054659d09171f.sample" ]
+dest_files=["res://.godot/imported/DeathSound.wav-16bc1b2fd60b98759a4054659d09171f.sample"]
 
 [params]
 

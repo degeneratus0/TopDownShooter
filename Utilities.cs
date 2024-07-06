@@ -8,9 +8,9 @@ public static class Utilities
 		return Mathf.Abs((int)GD.Randi() % range);
 	}
 
-	public static bool IsLastFrame(AnimatedSprite sprite)
+	public static bool IsLastFrame(AnimatedSprite2D sprite)
 	{
-		return sprite.Frame == sprite.Frames.GetFrameCount(sprite.Animation) - 1;
+		return sprite.Frame == sprite.SpriteFrames.GetFrameCount(sprite.Animation) - 1;
 	}
 
     public static PackedScene GetRandomSceneFromList(List<PackedScene> packedScenesList)

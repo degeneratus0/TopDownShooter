@@ -1,0 +1,292 @@
+[gd_scene load_steps=15 format=3 uid="uid://ccjono0ebaklc"]
+
+[ext_resource type="Script" path="res://Entities/Zombie/Zombie.cs" id="1_f1iq4"]
+[ext_resource type="Texture2D" uid="uid://byxlv655pk6kh" path="res://Assets/Arts/Zombie/ZombieRun.png" id="2_4cpxl"]
+[ext_resource type="Texture2D" uid="uid://ul4elvbb7vyv" path="res://Assets/Arts/Zombie/ZombieAttack.png" id="3_cnch0"]
+[ext_resource type="Texture2D" uid="uid://5dgkjvbji465" path="res://Assets/Arts/Zombie/ZombieDeath.png" id="4_e16aq"]
+[ext_resource type="AudioStream" uid="uid://wshcxrj6t05i" path="res://Assets/Sounds/Zombies/ZombieAttack-1.wav" id="5_ixqr5"]
+[ext_resource type="AudioStream" uid="uid://bjd1hx3r17u36" path="res://Assets/Sounds/Zombies/ZombieAttack-2.wav" id="6_472ik"]
+[ext_resource type="PackedScene" uid="uid://bonabrq3gy1ki" path="res://Entities/Zombie/ZombieObjects/HPBar.tscn" id="10_5gbj2"]
+
+[sub_resource type="Animation" id="Animation_ygn63"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Animations/RunSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Animations/AttackSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Animations/RunSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Animations/AttackSprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Animations/DeathSprite:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_lpjvw"]
+resource_name = "attack"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Animations/AttackSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [1, 2, 3]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"CauseDamage"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Animations/AttackSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Animations/RunSprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_ib1lm"]
+resource_name = "death"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Animations/DeathSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Animations/RunSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Animations/AttackSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Animations/DeathSprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_8ghpq"]
+resource_name = "run"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Animations/RunSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_doinr"]
+_data = {
+"RESET": SubResource("Animation_ygn63"),
+"attack": SubResource("Animation_lpjvw"),
+"death": SubResource("Animation_ib1lm"),
+"run": SubResource("Animation_8ghpq")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ruejw"]
+radius = 6.98463
+
+[sub_resource type="CircleShape2D" id="1"]
+radius = 9.0
+
+[node name="Zombie" type="CharacterBody2D" groups=["zombies"]]
+process_mode = 1
+z_index = 2
+z_as_relative = false
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_f1iq4")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-15, -15, 30, 30)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_metadata_flags = 0
+debug_path_custom_color = Color(0.529412, 0.0823529, 0.176471, 1)
+
+[node name="NavigationTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="Animations" type="Node2D" parent="."]
+
+[node name="RunSprite" type="Sprite2D" parent="Animations"]
+texture = ExtResource("2_4cpxl")
+hframes = 4
+
+[node name="AttackSprite" type="Sprite2D" parent="Animations"]
+visible = false
+texture = ExtResource("3_cnch0")
+hframes = 4
+
+[node name="DeathSprite" type="Sprite2D" parent="Animations"]
+visible = false
+texture = ExtResource("4_e16aq")
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_doinr")
+}
+autoplay = "run"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.0022, 0.991858)
+shape = SubResource("CircleShape2D_ruejw")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+input_pickable = false
+
+[node name="HitboxCollision" type="CollisionShape2D" parent="Hitbox"]
+process_physics_priority = -1
+shape = SubResource("1")
+debug_color = Color(0.74902, 0.0941176, 0.129412, 0.419608)
+
+[node name="ZombieAttackSounds" type="Node2D" parent="."]
+
+[node name="ZombieAttack1" type="AudioStreamPlayer2D" parent="ZombieAttackSounds"]
+stream = ExtResource("5_ixqr5")
+volume_db = 10.0
+
+[node name="ZombieAttack2" type="AudioStreamPlayer2D" parent="ZombieAttackSounds"]
+stream = ExtResource("6_472ik")
+volume_db = 10.0
+
+[node name="HPBar" parent="." instance=ExtResource("10_5gbj2")]
+visible = false
+offset_left = -8.0
+offset_top = 9.0
+offset_right = 24.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="OnScreenEntered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="OnScreenExited"]
+[connection signal="timeout" from="NavigationTimer" to="." method="OnNavigationTimerTimeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="OnAnimationFinished"]
+[connection signal="area_entered" from="Hitbox" to="." method="OnHitboxAreaEntered"]
+[connection signal="area_exited" from="Hitbox" to="." method="OnHitboxAreaExited"]

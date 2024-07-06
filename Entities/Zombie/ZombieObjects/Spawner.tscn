@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://blk10ffigbi6e"]
+
+[ext_resource type="Script" path="res://Entities/Zombie/ZombieObjects/Spawner.cs" id="1_uremg"]
+
+[node name="Marker" type="Marker2D"]
+script = ExtResource("1_uremg")
+
+[node name="VisibleOnScreen" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-100, -100)
+rect = Rect2(0, 0, 200, 200)

@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/EmptyClip.wav-bdcc00bd466bcb22bfbd55f28141ad4b.sample"
+type="AudioStreamWAV"
+uid="uid://d2tvp0alvxjit"
+path="res://.godot/imported/EmptyClip.wav-bdcc00bd466bcb22bfbd55f28141ad4b.sample"
 
 [deps]
 
 source_file="res://Assets/Sounds/Player/EmptyClip.wav"
-dest_files=[ "res://.import/EmptyClip.wav-bdcc00bd466bcb22bfbd55f28141ad4b.sample" ]
+dest_files=["res://.godot/imported/EmptyClip.wav-bdcc00bd466bcb22bfbd55f28141ad4b.sample"]
 
 [params]
 

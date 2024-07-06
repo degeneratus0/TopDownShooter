@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bh8r6do248j6a"]
+
+[ext_resource type="Texture2D" uid="uid://clm5pnyy3hire" path="res://Assets/Arts/Zombie/ZombieDead.png" id="1_7fxih"]
+
+[node name="DeadZombie" type="Sprite2D"]
+z_index = -1
+z_as_relative = false
+texture = ExtResource("1_7fxih")

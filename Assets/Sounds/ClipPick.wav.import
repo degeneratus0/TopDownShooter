@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/ClipPick.wav-50340fac9b9c60ea14ac00a3d60862cc.sample"
+type="AudioStreamWAV"
+uid="uid://d5xclf47hca"
+path="res://.godot/imported/ClipPick.wav-50340fac9b9c60ea14ac00a3d60862cc.sample"
 
 [deps]
 
 source_file="res://Assets/Sounds/ClipPick.wav"
-dest_files=[ "res://.import/ClipPick.wav-50340fac9b9c60ea14ac00a3d60862cc.sample" ]
+dest_files=["res://.godot/imported/ClipPick.wav-50340fac9b9c60ea14ac00a3d60862cc.sample"]
 
 [params]
 
