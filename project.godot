@@ -131,10 +131,7 @@ menu={
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Enemy"
 2d_physics/layer_4="Pickup"
-
-[navigation]
-
-2d/default_cell_size=16
+2d_physics/layer_5="EnemyPassableObstacle"
 
 [physics]
 

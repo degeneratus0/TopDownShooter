@@ -59,7 +59,6 @@ size_flags_vertical = 0
 text = "Current zombie spawn rate: 1.00 zombies per second"
 
 [node name="Zombikov" type="Label" parent="Control/MarginContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8

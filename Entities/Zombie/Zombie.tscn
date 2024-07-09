@@ -221,8 +221,10 @@ script = ExtResource("1_f1iq4")
 rect = Rect2(-15, -15, 30, 30)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 10.0
 path_metadata_flags = 0
 debug_path_custom_color = Color(0.529412, 0.0823529, 0.176471, 1)
+debug_path_custom_point_size = 2.0
 
 [node name="NavigationTimer" type="Timer" parent="."]
 wait_time = 0.1

@@ -6,41 +6,41 @@ public partial class MainMenu : Control
 	private Control OptionsScreen;
 
 	private SpinBox ammoSpinBox;
-    private MenuButton weaponButton;
-    private PopupMenu weaponPopup;
+	private MenuButton weaponButton;
+	private PopupMenu weaponPopup;
 
-    private const string DifficultyOptionsPath = 
+	private const string DifficultyOptionsPath = 
 		"OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs/";
-    private const string PlayerOptionsPath =
-        "OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs/";
+	private const string PlayerOptionsPath =
+		"OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs/";
 
 	public override void _Ready()
 	{
 		StartScreen = GetNode<Control>("StartScreen");
 		OptionsScreen = GetNode<Control>("OptionsScreen");
 		ammoSpinBox = GetNode<SpinBox>(PlayerOptionsPath + "AmmoSpinBox");
-        weaponButton = GetNode<MenuButton>("StartScreen/VBoxContainer/WeaponSelectionMenuButton");
+		weaponButton = GetNode<MenuButton>("StartScreen/VBoxContainer/WeaponSelectionMenuButton");
 
-        weaponPopup = weaponButton.GetPopup();
-        weaponPopup.AddItem("SMG");
-        weaponPopup.AddItem("Shotgun");
-        weaponPopup.IndexPressed += WeaponSelected;
-    }
+		weaponPopup = weaponButton.GetPopup();
+		weaponPopup.AddItem("SMG");
+		weaponPopup.AddItem("Shotgun");
+		weaponPopup.IndexPressed += WeaponSelected;
+	}
 
-    private void WeaponSelected(long index)
-    {
-        switch (weaponPopup.GetItemText((int)index))
-        {
-            case "SMG":
-                GlobalSettings.Player.SMGPreset();
-                break;
-            case "Shotgun":
-                GlobalSettings.Player.ShotgunPreset();
-                break;
-        }
-    }
+	private void WeaponSelected(long index)
+	{
+		switch (weaponPopup.GetItemText((int)index))
+		{
+			case "SMG":
+				GlobalSettings.Player.SMGPreset();
+				break;
+			case "Shotgun":
+				GlobalSettings.Player.ShotgunPreset();
+				break;
+		}
+	}
 
-    private void InitFields()
+	private void InitFields()
 	{
 		GetNode<SpinBox>(DifficultyOptionsPath + "ZombieSpawnRateSpinBox").Value = GlobalSettings.Difficulty.ZombieSpawnRate;
 		GetNode<SpinBox>(DifficultyOptionsPath + "SpawnRateIncrementSpinBox").Value = GlobalSettings.Difficulty.ZombieSpawnRateIncrement;
@@ -59,8 +59,8 @@ public partial class MainMenu : Control
 		GetNode<SpinBox>(PlayerOptionsPath + "BulletsPerShotSpinBox").Value = GlobalSettings.Player.BulletsPerShot;
 		GetNode<SpinBox>(PlayerOptionsPath + "BulletSpeedSpinBox").Value = GlobalSettings.Player.BulletSpeed;
 		GetNode<SpinBox>(PlayerOptionsPath + "BulSpeedRandSpinBox").Value = GlobalSettings.Player.BulletSpeedRandomness;
-        GetNode<SpinBox>(PlayerOptionsPath + "DamageSpinBox").Value = GlobalSettings.Player.Damage;
-        GetNode<CheckBox>(PlayerOptionsPath + "InvincibleCheckBox").ButtonPressed = GlobalSettings.Player.IsInvincible;
+		GetNode<SpinBox>(PlayerOptionsPath + "DamageSpinBox").Value = GlobalSettings.Player.Damage;
+		GetNode<CheckBox>(PlayerOptionsPath + "InvincibleCheckBox").ButtonPressed = GlobalSettings.Player.IsInvincible;
 
 		ammoSpinBox.Value = GlobalSettings.Player.Ammo;
 		ammoSpinBox.Step = GlobalSettings.Player.ClipSize;
@@ -69,16 +69,16 @@ public partial class MainMenu : Control
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (@event.IsActionPressed("toggle_fullscreen"))
-        {
-            if (DisplayServer.WindowGetMode() != DisplayServer.WindowMode.Fullscreen)
-            {
-                DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
-            }
-            else
-            {
-                DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
-            }
-        }
+		{
+			if (DisplayServer.WindowGetMode() != DisplayServer.WindowMode.Fullscreen)
+			{
+				DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
+			}
+			else
+			{
+				DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+			}
+		}
 	}
 
 	public void OnStartButtonPressed()
@@ -156,9 +156,9 @@ public partial class MainMenu : Control
 
 	public void OnBulSpeedRandChanged(float value) => GlobalSettings.Player.BulletSpeedRandomness = (int)value;
 
-    public void OnDamageSpinBoxValueChanged(float value) => GlobalSettings.Player.Damage = (int)value;    
+	public void OnDamageSpinBoxValueChanged(float value) => GlobalSettings.Player.Damage = (int)value;    
 
-    public void OnInvincibleToggled(bool value) => GlobalSettings.Player.IsInvincible = value;
+	public void OnInvincibleToggled(bool value) => GlobalSettings.Player.IsInvincible = value;
 
 	public void OnResetPlayerDefaultButtonPressed()
 	{

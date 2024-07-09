@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://Entities/Bonuses/BulletPack.cs" id="1"]
 
 [sub_resource type="RectangleShape2D" id="1"]
-size = Vector2(11, 11.5)
 
 [node name="BulletPack" type="Area2D"]
 process_mode = 1

@@ -1,14 +1,18 @@
 using Godot;
+using Godot.Collections;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public partial class Zombie : CharacterBody2D
 {
 	[Signal] public delegate void ZombieKilledEventHandler(Vector2 position, bool dropped);
 
-	private float AttackSpeed;
-	private int Damage;
-	private int HP;
-	private float DropChance;
-	private int Speed;
+	private float attackSpeed;
+	private int damage;
+	private int health;
+	private float dropChance;
+	private int speed;
 
 	private double fromAttack = 0;
 	private bool attacking = false;
@@ -35,9 +39,7 @@ public partial class Zombie : CharacterBody2D
 
 		GetNodes();
 		InitZombie();
-		HPBar.Init(HP);
-		float scaleFactor = (float)HP / GlobalSettings.Zombie.HP;
-		Scale *= scaleFactor;
+		HPBar.Init(health);
 	}
 
 	private void GetNodes()
@@ -55,11 +57,13 @@ public partial class Zombie : CharacterBody2D
 
 	private void InitZombie()
 	{
-		AttackSpeed = GlobalSettings.Zombie.AttackSpeed;
-		Damage = GlobalSettings.Zombie.Damage;
-		HP = GlobalSettings.Zombie.HP + GD.RandRange(-GlobalSettings.Zombie.HP / 3, GlobalSettings.Zombie.HP / 3);
-		DropChance = (float)GlobalSettings.Zombie.DropChance / 100;
-		Speed = GD.RandRange(GlobalSettings.Zombie.ZombieMinSpeed, GlobalSettings.Zombie.ZombieMaxSpeed);
+		attackSpeed = GlobalSettings.Zombie.AttackSpeed;
+		health = GlobalSettings.Zombie.HP + GD.RandRange(-GlobalSettings.Zombie.HP / 3, GlobalSettings.Zombie.HP / 3);
+		float scaleFactor = (float)health / GlobalSettings.Zombie.HP;
+		Scale *= scaleFactor;
+		damage = (int)(GlobalSettings.Zombie.Damage * scaleFactor);
+		dropChance = (float)GlobalSettings.Zombie.DropChance / 100;
+		speed = GD.RandRange(GlobalSettings.Zombie.ZombieMinSpeed, GlobalSettings.Zombie.ZombieMaxSpeed);
 	}
 
 	public override void _Process(double delta)
@@ -68,7 +72,7 @@ public partial class Zombie : CharacterBody2D
 		{
 			return;
 		}
-		if (fromAttack < AttackSpeed)
+		if (fromAttack < attackSpeed)
 		{
 			fromAttack += delta;
 		}
@@ -77,12 +81,13 @@ public partial class Zombie : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector2 direction = ToLocal(navAgent.GetNextPathPosition()).Normalized();
-
-		animations.Rotation = direction.Angle();
 		if (!navAgent.IsNavigationFinished())
 		{
-			Velocity = direction * Speed;
+			Vector2 direction = ToLocal(navAgent.GetNextPathPosition()).Normalized();
+
+			animations.Rotation = direction.Angle();
+
+			Velocity = direction * speed;
 			MoveAndSlide();
 		}
 	}
@@ -117,10 +122,10 @@ public partial class Zombie : CharacterBody2D
 
 	private void OnNavigationTimerTimeout()
 	{
-		if (Position.DistanceTo(player.Position) > 2000)
-		{
-			QueueFree();
-		}
+		//if (Position.DistanceTo(player.Position) > 2000)
+		//{
+		//    QueueFree();
+		//}
 		if (!dying)
 		{
 			navAgent.TargetPosition = player.GlobalPosition;
@@ -134,16 +139,16 @@ public partial class Zombie : CharacterBody2D
 			CreateBloodParticles();
 		}
 
-		if (HP > 0)
+		if (health > 0)
 		{
-			HP += value;
-			if (HP < GlobalSettings.Zombie.HP)
+			health += value;
+			if (health < GlobalSettings.Zombie.HP)
 			{
 				HPBar.Show();
 			}
-			HPBar.SetValue(HP);
+			HPBar.SetValue(health);
 
-			if (HP <= 0)
+			if (health <= 0)
 			{
 				Kill();
 			}
@@ -159,12 +164,13 @@ public partial class Zombie : CharacterBody2D
 
 	public void Kill()
 	{
+		CreateBloodParticles();
 		collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
 		GetNode<CollisionShape2D>("Hitbox/HitboxCollision").SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
 		dying = true;
 		HPBar.Hide();
 		bool dropped = false;
-		if (GD.Randf() < DropChance)
+		if (GD.Randf() < dropChance)
 		{
 			dropped = true;
 		}
@@ -174,7 +180,7 @@ public partial class Zombie : CharacterBody2D
 
 	private void Attack()
 	{
-		if (canAttack && fromAttack >= AttackSpeed)
+		if (canAttack && fromAttack >= attackSpeed)
 		{
 			fromAttack = 0;
 			attacking = true;
@@ -187,7 +193,7 @@ public partial class Zombie : CharacterBody2D
 	{
 		if (canAttack)
 		{
-			player.ChangeHP(Damage);
+			player.ChangeHP(-damage);
 		}
 	}
 
@@ -208,8 +214,7 @@ public partial class Zombie : CharacterBody2D
 		}
 		else if (area == player.MeleeArea)
 		{
-			CreateBloodParticles();
-			Kill();
+			ChangeHP(-45);
 		}
 	}
 

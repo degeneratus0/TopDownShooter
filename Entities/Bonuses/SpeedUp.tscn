@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://4hgf132olooq"]
+
+[ext_resource type="Script" path="res://Entities/Bonuses/SpeedUp.cs" id="1_umef2"]
+
+[sub_resource type="RectangleShape2D" id="1"]
+
+[node name="SpeedUp" type="Area2D"]
+process_mode = 1
+z_as_relative = false
+scale = Vector2(0.5, 0.5)
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+script = ExtResource("1_umef2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1")
+
+[node name="Background" type="Polygon2D" parent="."]
+position = Vector2(1.01328e-06, -2.38419e-07)
+scale = Vector2(0.727273, 0.727273)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-11, -11, 11, -11, 11, 11, -11, 11)
+
+[node name="Arrow1" type="Polygon2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(0.727273, 0.727273)
+color = Color(0.773981, 0.768561, 7.70092e-07, 1)
+polygon = PackedVector2Array(0, 4.65868e-21, -8.25, 8.25, -8.25, -8.25)
+
+[node name="Arrow2" type="Polygon2D" parent="."]
+position = Vector2(7, 0)
+scale = Vector2(0.727273, 0.727273)
+color = Color(0.773981, 0.768561, 7.70092e-07, 1)
+polygon = PackedVector2Array(0, 4.65868e-21, -8.25, 8.25, -8.25, -8.25)

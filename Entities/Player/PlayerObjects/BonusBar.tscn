@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dw46j5yplqov3"]
+
+[ext_resource type="Texture2D" uid="uid://b1e6ca6pa2you" path="res://Assets/Arts/UI/BonusProgress.png" id="1_wsgxi"]
+[ext_resource type="Script" path="res://Entities/Player/PlayerObjects/BonusBar.cs" id="2_ivujx"]
+
+[node name="BonusBar" type="TextureProgressBar"]
+texture_filter = 1
+offset_left = -64.0
+offset_top = -64.0
+scale = Vector2(2, 2)
+step = 0.1
+value = 50.0
+fill_mode = 5
+texture_progress = ExtResource("1_wsgxi")
+script = ExtResource("2_ivujx")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://cn6ireg7mcdxn"]
+[gd_scene load_steps=38 format=3 uid="uid://cn6ireg7mcdxn"]
 
 [ext_resource type="Script" path="res://Entities/Player/Player.cs" id="1_mmpd0"]
 [ext_resource type="Texture2D" uid="uid://bekchas12b8wi" path="res://Assets/Arts/Player/CharacterLegs32.png" id="2_lvftq"]
@@ -9,7 +9,6 @@
 [ext_resource type="AudioStream" uid="uid://d2tvp0alvxjit" path="res://Assets/Sounds/Player/EmptyClip.wav" id="7_bhns4"]
 [ext_resource type="Texture2D" uid="uid://bsrafqhwna645" path="res://Assets/Arts/UI/CharacterHPBar.png" id="8_vjvue"]
 [ext_resource type="Texture2D" uid="uid://cl3fmg3j3vha1" path="res://Assets/Arts/UI/CharacterHPProgress.png" id="9_kaye8"]
-[ext_resource type="Texture2D" uid="uid://b1e6ca6pa2you" path="res://Assets/Arts/UI/DamageUpProgress.png" id="10_p8tjx"]
 [ext_resource type="Texture2D" uid="uid://nokjd3a61h6b" path="res://Assets/Arts/UI/ReloadProgress.png" id="11_htyjx"]
 
 [sub_resource type="AtlasTexture" id="37"]
@@ -274,6 +273,7 @@ process_mode = 1
 z_index = 2
 z_as_relative = false
 collision_layer = 9
+collision_mask = 17
 motion_mode = 1
 floor_stop_on_slope = false
 floor_block_on_wall = false
@@ -363,7 +363,7 @@ stream = ExtResource("7_bhns4")
 z_index = 20
 z_as_relative = false
 
-[node name="HPBar" type="TextureProgressBar" parent="ControlsContainer"]
+[node name="HealthBar" type="TextureProgressBar" parent="ControlsContainer"]
 texture_filter = 1
 offset_left = -64.0
 offset_top = -64.0
@@ -375,26 +375,15 @@ texture_progress = ExtResource("9_kaye8")
 tint_progress = Color(0.00784314, 0.623529, 0.0901961, 0.784314)
 metadata/_edit_use_anchors_ = true
 
-[node name="DamageUpBar" type="TextureProgressBar" parent="ControlsContainer"]
-visible = false
+[node name="ArmorBar" type="TextureProgressBar" parent="ControlsContainer"]
 texture_filter = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
 offset_left = -64.0
 offset_top = -64.0
-grow_horizontal = 2
-grow_vertical = 2
 scale = Vector2(2, 2)
-size_flags_horizontal = 4
-size_flags_vertical = 4
-step = 0.1
-value = 50.0
 fill_mode = 5
-texture_progress = ExtResource("10_p8tjx")
-tint_progress = Color(0.482353, 0.054902, 0.0862745, 1)
+texture_progress = ExtResource("9_kaye8")
+tint_progress = Color(0, 0.427451, 0.803922, 0.784314)
+metadata/_edit_use_anchors_ = true
 
 [node name="ReloadBar" type="TextureProgressBar" parent="ControlsContainer"]
 visible = false
@@ -407,9 +396,4 @@ fill_mode = 5
 texture_progress = ExtResource("11_htyjx")
 tint_progress = Color(0.741176, 0.741176, 0, 1)
 
-[node name="DamageUpTimer" type="Timer" parent="."]
-wait_time = 10.0
-one_shot = true
-
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="OnAnimationFinished"]
-[connection signal="timeout" from="DamageUpTimer" to="." method="OnDamageUpTimerTimeout"]

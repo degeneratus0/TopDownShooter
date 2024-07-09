@@ -147,7 +147,7 @@ layout_mode = 2
 [node name="VBoxLabels" type="VBoxContainer" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox"]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_constants/separation = 10
+theme_override_constants/separation = 13
 
 [node name="ZombieSpawnRateLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxLabels"]
 layout_mode = 2
@@ -280,7 +280,7 @@ layout_mode = 2
 
 [node name="VBoxLabels" type="VBoxContainer" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 13
 
 [node name="SpeedLabel" type="Label" parent="OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxLabels"]
 layout_mode = 2

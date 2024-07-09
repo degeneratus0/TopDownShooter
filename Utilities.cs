@@ -13,8 +13,8 @@ public static class Utilities
 		return sprite.Frame == sprite.SpriteFrames.GetFrameCount(sprite.Animation) - 1;
 	}
 
-    public static PackedScene GetRandomSceneFromList(List<PackedScene> packedScenesList)
-    {
-        return packedScenesList[Utilities.RandNum(packedScenesList.Count)];
-    }
+	public static PackedScene GetRandomSceneFromList(List<PackedScene> packedScenesList)
+	{
+		return packedScenesList[Utilities.RandNum(packedScenesList.Count)];
+	}
 }

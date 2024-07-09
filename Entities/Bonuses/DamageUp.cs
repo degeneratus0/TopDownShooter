@@ -1,7 +1,7 @@
 public partial class DamageUp : Bonus
 {
-    public DamageUp() : base(BonusType.DamageUp)
-    {
+	public DamageUp() : base(BonusType.DamageUp)
+	{
 
-    }
+	}
 }
