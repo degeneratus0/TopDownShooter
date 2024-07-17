@@ -1,6 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://ccjono0ebaklc"]
+[gd_scene load_steps=16 format=3 uid="uid://ccjono0ebaklc"]
 
-[ext_resource type="Script" path="res://Entities/Zombie/Zombie.cs" id="1_f1iq4"]
+[ext_resource type="Script" path="res://Entities/Zombie/Zombie.cs" id="1_y84iq"]
 [ext_resource type="Texture2D" uid="uid://byxlv655pk6kh" path="res://Assets/Arts/Zombie/ZombieRun.png" id="2_4cpxl"]
 [ext_resource type="Texture2D" uid="uid://ul4elvbb7vyv" path="res://Assets/Arts/Zombie/ZombieAttack.png" id="3_cnch0"]
 [ext_resource type="Texture2D" uid="uid://5dgkjvbji465" path="res://Assets/Arts/Zombie/ZombieDeath.png" id="4_e16aq"]
@@ -8,12 +8,15 @@
 [ext_resource type="AudioStream" uid="uid://bjd1hx3r17u36" path="res://Assets/Sounds/Zombies/ZombieAttack-2.wav" id="6_472ik"]
 [ext_resource type="PackedScene" uid="uid://bonabrq3gy1ki" path="res://Entities/Zombie/ZombieObjects/HPBar.tscn" id="10_5gbj2"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ubhxo"]
+radius = 5.0
+
 [sub_resource type="Animation" id="Animation_ygn63"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Animations/RunSprite:frame")
+tracks/0/path = NodePath("Rotatable/Animations/RunSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -25,7 +28,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Animations/AttackSprite:frame")
+tracks/1/path = NodePath("Rotatable/Animations/AttackSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -37,7 +40,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Animations/RunSprite:visible")
+tracks/2/path = NodePath("Rotatable/Animations/RunSprite:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -49,7 +52,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Animations/AttackSprite:visible")
+tracks/3/path = NodePath("Rotatable/Animations/AttackSprite:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -61,7 +64,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Animations/DeathSprite:frame")
+tracks/4/path = NodePath("Rotatable/Animations/DeathSprite:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -78,7 +81,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Animations/AttackSprite:frame")
+tracks/0/path = NodePath("Rotatable/Animations/AttackSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -104,7 +107,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Animations/AttackSprite:visible")
+tracks/2/path = NodePath("Rotatable/Animations/AttackSprite:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -116,7 +119,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Animations/RunSprite:visible")
+tracks/3/path = NodePath("Rotatable/Animations/RunSprite:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -132,7 +135,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Animations/DeathSprite:frame")
+tracks/0/path = NodePath("Rotatable/Animations/DeathSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -144,7 +147,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Animations/RunSprite:visible")
+tracks/1/path = NodePath("Rotatable/Animations/RunSprite:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -156,7 +159,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Animations/AttackSprite:visible")
+tracks/2/path = NodePath("Rotatable/Animations/AttackSprite:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -168,7 +171,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Animations/DeathSprite:visible")
+tracks/3/path = NodePath("Rotatable/Animations/DeathSprite:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -185,7 +188,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Animations/RunSprite:frame")
+tracks/0/path = NodePath("Rotatable/Animations/RunSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -204,24 +207,25 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ruejw"]
-radius = 6.98463
+radius = 6.0
 
 [sub_resource type="CircleShape2D" id="1"]
-radius = 9.0
+radius = 8.0
 
 [node name="Zombie" type="CharacterBody2D" groups=["zombies"]]
 process_mode = 1
 z_index = 2
 z_as_relative = false
+collision_layer = 3
 motion_mode = 1
 wall_min_slide_angle = 0.0
-script = ExtResource("1_f1iq4")
+script = ExtResource("1_y84iq")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 rect = Rect2(-15, -15, 30, 30)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_desired_distance = 10.0
+target_desired_distance = 15.0
 path_metadata_flags = 0
 debug_path_custom_color = Color(0.529412, 0.0823529, 0.176471, 1)
 debug_path_custom_point_size = 2.0
@@ -230,21 +234,35 @@ debug_path_custom_point_size = 2.0
 wait_time = 0.1
 autostart = true
 
-[node name="Animations" type="Node2D" parent="."]
+[node name="Rotatable" type="Node2D" parent="."]
 
-[node name="RunSprite" type="Sprite2D" parent="Animations"]
+[node name="Animations" type="Node2D" parent="Rotatable"]
+
+[node name="RunSprite" type="Sprite2D" parent="Rotatable/Animations"]
 texture = ExtResource("2_4cpxl")
 hframes = 4
 
-[node name="AttackSprite" type="Sprite2D" parent="Animations"]
+[node name="AttackSprite" type="Sprite2D" parent="Rotatable/Animations"]
 visible = false
 texture = ExtResource("3_cnch0")
 hframes = 4
 
-[node name="DeathSprite" type="Sprite2D" parent="Animations"]
+[node name="DeathSprite" type="Sprite2D" parent="Rotatable/Animations"]
 visible = false
 texture = ExtResource("4_e16aq")
 hframes = 3
+
+[node name="AttackArea" type="Area2D" parent="Rotatable"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="AttackCollision" type="CollisionShape2D" parent="Rotatable/AttackArea"]
+process_physics_priority = -1
+position = Vector2(9, 0)
+rotation = 1.5708
+shape = SubResource("CircleShape2D_ubhxo")
+debug_color = Color(0.74902, 0.0941176, 0.129412, 0.419608)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -257,14 +275,15 @@ scale = Vector2(1.0022, 0.991858)
 shape = SubResource("CircleShape2D_ruejw")
 
 [node name="Hitbox" type="Area2D" parent="."]
-collision_layer = 2
+collision_layer = 0
 collision_mask = 4
 input_pickable = false
+monitorable = false
 
 [node name="HitboxCollision" type="CollisionShape2D" parent="Hitbox"]
 process_physics_priority = -1
 shape = SubResource("1")
-debug_color = Color(0.74902, 0.0941176, 0.129412, 0.419608)
+debug_color = Color(0.164694, 0.0616539, 0.604759, 0.419608)
 
 [node name="ZombieAttackSounds" type="Node2D" parent="."]
 
@@ -276,19 +295,38 @@ volume_db = 10.0
 stream = ExtResource("6_472ik")
 volume_db = 10.0
 
-[node name="HPBar" parent="." instance=ExtResource("10_5gbj2")]
-visible = false
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
 offset_left = -8.0
-offset_top = 9.0
-offset_right = 24.0
-offset_bottom = 13.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_top = 13.0
+offset_right = 8.0
+offset_bottom = 15.0
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HPBar" parent="Control" instance=ExtResource("10_5gbj2")]
+visible = false
+layout_mode = 1
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 32.0
+offset_bottom = 4.0
 scale = Vector2(0.5, 0.5)
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="OnScreenEntered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="OnScreenExited"]
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="OnVelocityComputed"]
 [connection signal="timeout" from="NavigationTimer" to="." method="OnNavigationTimerTimeout"]
+[connection signal="area_entered" from="Rotatable/AttackArea" to="." method="OnAttackAreaEntered"]
+[connection signal="area_exited" from="Rotatable/AttackArea" to="." method="OnAttackAreaExited"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="OnAnimationFinished"]
 [connection signal="area_entered" from="Hitbox" to="." method="OnHitboxAreaEntered"]
-[connection signal="area_exited" from="Hitbox" to="." method="OnHitboxAreaExited"]

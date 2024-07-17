@@ -28,6 +28,8 @@ project/assembly_name="Shoot -em"
 
 [editor]
 
+naming/default_signal_callback_name="On{NodeName}{SignalName}"
+naming/default_signal_callback_to_self_name="On{SignalName}"
 version_control_autoload_on_startup=true
 version_control_plugin_name="GitAPI"
 

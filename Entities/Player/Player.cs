@@ -174,9 +174,7 @@ public partial class Player : CharacterBody2D
 	{
 		if (!isDead)
 		{
-			velocity = new Vector2(                
-				Input.GetActionStrength("right") - Input.GetActionStrength("left"),
-				Input.GetActionStrength("down") - Input.GetActionStrength("up"));
+			velocity = Input.GetVector("left", "right", "up", "down");
 
 			Velocity = velocity.Normalized() * Speed;
 			MoveAndSlide();

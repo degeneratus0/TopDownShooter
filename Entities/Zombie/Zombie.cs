@@ -1,6 +1,4 @@
 using Godot;
-using Godot.Collections;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,17 +18,33 @@ public partial class Zombie : CharacterBody2D
 	private bool dying = false;
 	private Player player = null;
 
+	float steerForce = 0.1f;
+	int rayLenght = 30;
+	int rayNum = 8;
+
+	List<Vector2> rayDirections;
+	List<float> interest;
+	List<float> danger;
+
 	private NavigationAgent2D navAgent;
 	private Timer navTimer;
 	private AnimationPlayer animPlayer;
 	private Node attackSounds;
 	private CollisionShape2D collision;
 	private Area2D hitbox;
-	private HPBar HPBar;
+	private Control control;
+	private HPBar hpBar;
 	private Node2D animations;
+
+	private Node2D rotatable;
+
+	private PhysicsRayQueryParameters2D rayIntersectionParameters;
+	private PhysicsDirectSpaceState2D spaceState;
 
 	private PackedScene BloodEmitterScene;
 	private PackedScene DeadSprite;
+
+	private static Vector2 hpBarSize = new Vector2(32, 4);
 
 	public override void _Ready()
 	{
@@ -39,7 +53,23 @@ public partial class Zombie : CharacterBody2D
 
 		GetNodes();
 		InitZombie();
-		HPBar.Init(health);
+		hpBar.Init(health);
+
+		interest = new List<float>(new float[rayNum]);
+		danger = new List<float>(new float[rayNum]);
+		rayDirections = new List<Vector2>(rayNum);
+		for (int i = 0; i < rayNum; i++)
+		{
+			float angle = i * 2 * Mathf.Pi / rayNum;
+			rayDirections.Add(Vector2.Right.Rotated(angle));
+		}
+
+		spaceState = GetWorld2D().DirectSpaceState;
+		rayIntersectionParameters = new PhysicsRayQueryParameters2D
+		{
+			CollisionMask = 1,
+			Exclude = { GetRid() }
+		};
 	}
 
 	private void GetNodes()
@@ -50,9 +80,11 @@ public partial class Zombie : CharacterBody2D
 		attackSounds = GetNode<Node>("ZombieAttackSounds");
 		collision = GetNode<CollisionShape2D>("CollisionShape2D");
 		hitbox = GetNode<Area2D>("Hitbox");
-		HPBar = GetNode<HPBar>("HPBar");
+		hpBar = GetNode<HPBar>("Control/HPBar");
+		control = GetNode<Control>("Control");
 
-		animations = GetNode<Node2D>("Animations");
+		animations = GetNode<Node2D>("Rotatable/Animations");
+		rotatable = GetNode<Node2D>("Rotatable");
 	}
 
 	private void InitZombie()
@@ -64,6 +96,8 @@ public partial class Zombie : CharacterBody2D
 		damage = (int)(GlobalSettings.Zombie.Damage * scaleFactor);
 		dropChance = (float)GlobalSettings.Zombie.DropChance / 100;
 		speed = GD.RandRange(GlobalSettings.Zombie.ZombieMinSpeed, GlobalSettings.Zombie.ZombieMaxSpeed);
+
+		control.Size = hpBarSize;
 	}
 
 	public override void _Process(double delta)
@@ -83,13 +117,101 @@ public partial class Zombie : CharacterBody2D
 	{
 		if (!navAgent.IsNavigationFinished())
 		{
-			Vector2 direction = ToLocal(navAgent.GetNextPathPosition()).Normalized();
+			SetInterest();
+			SetDanger();
+			Vector2 direction = SetDirection();
 
-			animations.Rotation = direction.Angle();
+			Velocity = Velocity.Lerp(direction.Rotated(rotatable.Rotation) * speed, steerForce);
 
-			Velocity = direction * speed;
+			rotatable.Rotation = Velocity.Angle();
+
 			MoveAndSlide();
 		}
+	}
+
+	public void SetPlayer(Player player)
+	{
+		this.player = player;
+	}
+
+	public void ChangeHP(int value)
+	{
+		if (value < 0)
+		{
+			CreateBloodParticles();
+		}
+
+		if (health > 0)
+		{
+			health += value;
+			if (health < GlobalSettings.Zombie.HP)
+			{
+				hpBar.Show();
+			}
+			hpBar.SetValue(health);
+
+			if (health <= 0)
+			{
+				Kill();
+			}
+		}
+	}
+
+	public void Kill()
+	{
+		CreateBloodParticles();
+		collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+		GetNode<CollisionShape2D>("Hitbox/HitboxCollision").SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
+		dying = true;
+		hpBar.Hide();
+		bool dropped = false;
+		if (GD.Randf() < dropChance)
+		{
+			dropped = true;
+		}
+		animPlayer.Play("death");
+		EmitSignal(SignalName.ZombieKilled, Position, dropped);
+	}
+
+	private void SetInterest()
+	{
+		Vector2 direction = ToLocal(navAgent.GetNextPathPosition()).Normalized();
+
+		for (int i = 0; i < rayNum; i++)
+		{
+			var d = rayDirections[i].Rotated(rotatable.Rotation).Dot(direction);
+			interest[i] = Mathf.Max(0, d);
+		}
+	}
+
+	private void SetDanger()
+	{
+		for (int i = 0; i < rayNum; i++)
+		{
+			rayIntersectionParameters.From = Position;
+			rayIntersectionParameters.To = Position + rayDirections[i].Rotated(rotatable.Rotation) * rayLenght;
+			var result = spaceState.IntersectRay(rayIntersectionParameters);
+			danger[i] = result.Any() ? 1 : 0;
+		}
+	}
+
+	private Vector2 SetDirection()
+	{
+		for (int i = 0; i < rayNum; i++)
+		{
+			if (danger[i] > 0)
+			{
+				interest[i] = 0;
+			}
+		}
+
+		Vector2 direction = Vector2.Zero;
+		for (int i = 0; i < rayNum; i++)
+		{
+			direction += rayDirections[i] * interest[i];
+		}
+
+		return direction.Normalized();
 	}
 
 	private void OnScreenExited()
@@ -113,7 +235,7 @@ public partial class Zombie : CharacterBody2D
 		{
 			Sprite2D deadSprite = (Sprite2D)DeadSprite.Instantiate();
 			deadSprite.Position = Position;
-			deadSprite.Rotation = animations.Rotation;
+			deadSprite.Rotation = rotatable.Rotation;
 			deadSprite.Scale = Scale;
 			GetParent().AddChild(deadSprite);
 			QueueFree();
@@ -132,51 +254,14 @@ public partial class Zombie : CharacterBody2D
 		}
 	}
 
-	public void ChangeHP(int value)
-	{
-		if (value < 0)
-		{
-			CreateBloodParticles();
-		}
-
-		if (health > 0)
-		{
-			health += value;
-			if (health < GlobalSettings.Zombie.HP)
-			{
-				HPBar.Show();
-			}
-			HPBar.SetValue(health);
-
-			if (health <= 0)
-			{
-				Kill();
-			}
-		}
-	}
-
 	private void CreateBloodParticles()
 	{
 		BloodEmitter bloodEmitter = (BloodEmitter)BloodEmitterScene.Instantiate();
-		bloodEmitter.Position = Position;
-		GetParent().AddChild(bloodEmitter);
-	}
-
-	public void Kill()
-	{
-		CreateBloodParticles();
-		collision.SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
-		GetNode<CollisionShape2D>("Hitbox/HitboxCollision").SetDeferred(CollisionShape2D.PropertyName.Disabled, true);
-		dying = true;
-		HPBar.Hide();
-		bool dropped = false;
-		if (GD.Randf() < dropChance)
-		{
-			dropped = true;
-		}
-		animPlayer.Play("death");
-		EmitSignal(SignalName.ZombieKilled, Position, dropped);
-	}
+        bloodEmitter.Position = Position;
+        bloodEmitter.Finished += QueueFree;
+        GetParent().AddChild(bloodEmitter);
+        bloodEmitter.Emitting = true;
+    }
 
 	private void Attack()
 	{
@@ -197,18 +282,9 @@ public partial class Zombie : CharacterBody2D
 		}
 	}
 
-	public void SetPlayer(Player player)
-	{
-		this.player = player;
-	}
-
 	private void OnHitboxAreaEntered(Area2D area)
 	{
-		if (area == player.Hitbox)
-		{
-			canAttack = true;
-		}
-		else if (area is Bullet)
+		if (area is Bullet)
 		{
 			ChangeHP(-player.Damage);
 		}
@@ -218,7 +294,15 @@ public partial class Zombie : CharacterBody2D
 		}
 	}
 
-	private void OnHitboxAreaExited(Area2D area)
+	private void OnAttackAreaEntered(Area2D area)
+	{
+		if (area == player.Hitbox)
+		{
+			canAttack = true;
+		}
+	}
+
+	private void OnAttackAreaExited(Area2D area)
 	{
 		if (area == player.Hitbox)
 		{
