@@ -9,7 +9,7 @@ namespace Shootem.Entities
         public override void _Ready()
         {
             BodyEntered += OnPickableBodyEntered;
-            Picked += GetNode<World>("/root/World").OnPicked; //?
+            Picked += GetNode<World>("/root/World").OnPicked;
         }
 
         public void OnPickableBodyEntered(Node body)

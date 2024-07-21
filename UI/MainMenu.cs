@@ -9,16 +9,16 @@ public partial class MainMenu : Control
 	private MenuButton weaponButton;
 	private PopupMenu weaponPopup;
 
-	private const string DifficultyOptionsPath = 
-		"OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs/";
-	private const string PlayerOptionsPath =
-		"OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs/";
+	private static NodePath DifficultyOptionsPath =
+		"OptionsScreen/VBox/HBox/VBoxDifficulty/Panel/Margin/HBox/VBoxInputs";
+	private static NodePath PlayerOptionsPath =
+		"OptionsScreen/VBox/HBox/VBoxPlayer/Panel/Margin/HBox/VBoxInputs";
 
 	public override void _Ready()
 	{
 		StartScreen = GetNode<Control>("StartScreen");
 		OptionsScreen = GetNode<Control>("OptionsScreen");
-		ammoSpinBox = GetNode<SpinBox>(PlayerOptionsPath + "AmmoSpinBox");
+		ammoSpinBox = GetNode<SpinBox>(PlayerOptionsPath + "/AmmoSpinBox");
 		weaponButton = GetNode<MenuButton>("StartScreen/VBoxContainer/WeaponSelectionMenuButton");
 
 		weaponPopup = weaponButton.GetPopup();
@@ -42,25 +42,24 @@ public partial class MainMenu : Control
 
 	private void InitFields()
 	{
-		GetNode<SpinBox>(DifficultyOptionsPath + "ZombieSpawnRateSpinBox").Value = GlobalSettings.Difficulty.ZombieSpawnRate;
-		GetNode<SpinBox>(DifficultyOptionsPath + "SpawnRateIncrementSpinBox").Value = GlobalSettings.Difficulty.ZombieSpawnRateIncrement;
-		GetNode<SpinBox>(DifficultyOptionsPath + "ZombiesToIncSpinBox").Value = GlobalSettings.Difficulty.ZombiesToIncrement;
-		GetNode<SpinBox>(DifficultyOptionsPath + "MaxSpawnRateSpinBox").Value = GlobalSettings.Difficulty.MaxSpawnRate;
-		GetNode<CheckBox>(DifficultyOptionsPath + "ShowSpawnRateCheckBox").ButtonPressed = GlobalSettings.Difficulty.ShowSpawnRate;
-		GetNode<SpinBox>(DifficultyOptionsPath + "ZombieMinSpeedSpinBox").Value = GlobalSettings.Zombie.ZombieMinSpeed;
-		GetNode<SpinBox>(DifficultyOptionsPath + "ZombieMaxSpeedSpinBox").Value = GlobalSettings.Zombie.ZombieMaxSpeed;
-		GetNode<SpinBox>(DifficultyOptionsPath + "DropChanceSpinBox").Value = GlobalSettings.Zombie.DropChance;
+		GetNode<SpinBox>(DifficultyOptionsPath + "/ZombieSpawnRateSpinBox").Value = GlobalSettings.Difficulty.ZombieSpawnRate;
+		GetNode<SpinBox>(DifficultyOptionsPath + "/SpawnRateIncrementSpinBox").Value = GlobalSettings.Difficulty.ZombieSpawnRateIncrement;
+		GetNode<SpinBox>(DifficultyOptionsPath + "/ZombiesToIncSpinBox").Value = GlobalSettings.Difficulty.ZombiesToIncrement;
+		GetNode<SpinBox>(DifficultyOptionsPath + "/MaxSpawnRateSpinBox").Value = GlobalSettings.Difficulty.MaxSpawnRate;
+		GetNode<CheckBox>(DifficultyOptionsPath + "/ShowSpawnRateCheckBox").ButtonPressed = GlobalSettings.Difficulty.ShowSpawnRate;
+		GetNode<SpinBox>(DifficultyOptionsPath + "/ZombieMinSpeedSpinBox").Value = GlobalSettings.Zombie.AverageSpeed;
+		GetNode<SpinBox>(DifficultyOptionsPath + "/DropChanceSpinBox").Value = GlobalSettings.Zombie.DropChance;
 		
-		GetNode<SpinBox>(PlayerOptionsPath + "SpeedSpinBox").Value = GlobalSettings.Player.Speed;
-		GetNode<SpinBox>(PlayerOptionsPath + "FireRateSpinBox").Value = GlobalSettings.Player.FireRate;
-		GetNode<SpinBox>(PlayerOptionsPath + "ClipSizeSpinBox").Value = GlobalSettings.Player.ClipSize;
-		GetNode<SpinBox>(PlayerOptionsPath + "ReloadTimeSpinBox").Value = GlobalSettings.Player.ReloadTime;
-		GetNode<SpinBox>(PlayerOptionsPath + "SpreadingSpinBox").Value = GlobalSettings.Player.Spreading;
-		GetNode<SpinBox>(PlayerOptionsPath + "BulletsPerShotSpinBox").Value = GlobalSettings.Player.BulletsPerShot;
-		GetNode<SpinBox>(PlayerOptionsPath + "BulletSpeedSpinBox").Value = GlobalSettings.Player.BulletSpeed;
-		GetNode<SpinBox>(PlayerOptionsPath + "BulSpeedRandSpinBox").Value = GlobalSettings.Player.BulletSpeedRandomness;
-		GetNode<SpinBox>(PlayerOptionsPath + "DamageSpinBox").Value = GlobalSettings.Player.Damage;
-		GetNode<CheckBox>(PlayerOptionsPath + "InvincibleCheckBox").ButtonPressed = GlobalSettings.Player.IsInvincible;
+		GetNode<SpinBox>(PlayerOptionsPath + "/SpeedSpinBox").Value = GlobalSettings.Player.Speed;
+		GetNode<SpinBox>(PlayerOptionsPath + "/FireRateSpinBox").Value = GlobalSettings.Player.FireRate;
+		GetNode<SpinBox>(PlayerOptionsPath + "/ClipSizeSpinBox").Value = GlobalSettings.Player.ClipSize;
+		GetNode<SpinBox>(PlayerOptionsPath + "/ReloadTimeSpinBox").Value = GlobalSettings.Player.ReloadTime;
+		GetNode<SpinBox>(PlayerOptionsPath + "/SpreadingSpinBox").Value = GlobalSettings.Player.Spreading;
+		GetNode<SpinBox>(PlayerOptionsPath + "/BulletsPerShotSpinBox").Value = GlobalSettings.Player.BulletsPerShot;
+		GetNode<SpinBox>(PlayerOptionsPath + "/BulletSpeedSpinBox").Value = GlobalSettings.Player.BulletSpeed;
+		GetNode<SpinBox>(PlayerOptionsPath + "/BulSpeedRandSpinBox").Value = GlobalSettings.Player.BulletSpeedRandomness;
+		GetNode<SpinBox>(PlayerOptionsPath + "/DamageSpinBox").Value = GlobalSettings.Player.Damage;
+		GetNode<CheckBox>(PlayerOptionsPath + "/InvincibleCheckBox").ButtonPressed = GlobalSettings.Player.IsInvincible;
 
 		ammoSpinBox.Value = GlobalSettings.Player.Ammo;
 		ammoSpinBox.Step = GlobalSettings.Player.ClipSize;
@@ -68,7 +67,7 @@ public partial class MainMenu : Control
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (@event.IsActionPressed("toggle_fullscreen"))
+		if (@event.IsActionPressed(Controls.ToggleFullscreen))
 		{
 			if (DisplayServer.WindowGetMode() != DisplayServer.WindowMode.Fullscreen)
 			{
@@ -114,9 +113,7 @@ public partial class MainMenu : Control
 
 	public void OnShowSpawnRateToggled(bool value) => GlobalSettings.Difficulty.ShowSpawnRate = value;
 
-	public void OnZombieMinSpeedChanged(float value) => GlobalSettings.Zombie.ZombieMinSpeed = (int)value;
-
-	public void OnZombieMaxSpeedChanged(float value) => GlobalSettings.Zombie.ZombieMaxSpeed = (int)value;
+	public void OnZombieMinSpeedChanged(float value) => GlobalSettings.Zombie.AverageSpeed = (int)value;
 
 	public void OnDropChanceChanged(float value) => GlobalSettings.Zombie.DropChance = (int)value;
 
@@ -144,6 +141,7 @@ public partial class MainMenu : Control
 		ammoSpinBox.Value = ammoSpinBox.Value;
 		GlobalSettings.Player.Ammo = (int)ammoSpinBox.Value;
 	}
+
 	public void OnAmmoChanged(float value) => GlobalSettings.Player.Ammo = (int)value;
 
 	public void OnReloadTimeChanged(float value) => GlobalSettings.Player.ReloadTime = value;

@@ -14,7 +14,7 @@ public partial class World : Node2D
 	private Level currentLevel;
 	private MobManager mobManager;
 
-	private const string uiPath = "UI/Control/";
+	private static StringName uiPath = "UI/Control/";
 
 	public override void _Ready()
 	{
@@ -33,7 +33,7 @@ public partial class World : Node2D
 
 	private void GetNodes()
 	{
-		player = GetNode<Player>("Player");
+		player = GetNode<Player>("Arena/Player");
 		ui = GetNode<UI>("UI");
 		deathScreen = GetNode<Control>(uiPath + "DeathScreen");
 		pauseScreen = GetNode<Control>(uiPath + "PauseScreen");
@@ -72,14 +72,13 @@ public partial class World : Node2D
 		}
 	}
 
-
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		if (@event.IsActionPressed("reload") && (deathScreen.Visible || winScreen.Visible))
+		if (@event.IsActionPressed(Controls.Reload) && (deathScreen.Visible || winScreen.Visible))
 		{
 			NewGame();
 		}
-		if (@event.IsActionPressed("quit"))
+		if (@event.IsActionPressed(Controls.Quit))
 		{
 			if (deathScreen.Visible || winScreen.Visible)
 			{
@@ -96,12 +95,12 @@ public partial class World : Node2D
 				pauseScreen.Hide();
 			}
 		}
-		if (@event.IsActionPressed("menu") && pauseScreen.Visible)
+		if (@event.IsActionPressed(Controls.Menu) && pauseScreen.Visible)
 		{
 			GetTree().Paused = false;
 			GetTree().ChangeSceneToFile("res://UI/MainMenu.tscn");
 		}
-		if (@event.IsActionPressed("toggle_fullscreen"))
+		if (@event.IsActionPressed(Controls.ToggleFullscreen))
 		{
 			if (DisplayServer.WindowGetMode() != DisplayServer.WindowMode.Fullscreen)
 			{
@@ -125,7 +124,7 @@ public partial class World : Node2D
 		{
 			ui.UpdateWeaponTexture(weapon.Texture);
 			weapon.UpdateConfiguration();
-			player.InitPlayer();
+			player.InitPlayer(); //TODO: Init weapon
 		}
 	}
 }

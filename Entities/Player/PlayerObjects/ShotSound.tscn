@@ -1,12 +1,8 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://bomy6c601bb50"]
 
 [ext_resource type="AudioStream" uid="uid://bfdee0w1jmsxc" path="res://Assets/Sounds/Player/shot.wav" id="1"]
-[ext_resource type="Script" path="res://Entities/Player/PlayerObjects/ShotSound.cs" id="2"]
 
 [node name="ShotSound" type="AudioStreamPlayer2D"]
-stream = ExtResource( 1 )
+stream = ExtResource("1")
 volume_db = -10.0
 autoplay = true
-script = ExtResource( 2 )
-
-[connection signal="finished" from="." to="." method="OnShotSoundFinished"]

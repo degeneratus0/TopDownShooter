@@ -5,10 +5,22 @@ using System.Linq;
 public partial class Level : Node
 {
     protected Node spawnersFolder;
+    protected Marker2D playerSpawn;
+
+    private PackedScene playerScene = GD.Load<PackedScene>("res://Entities/Player/Player.tscn");
 
     public override void _Ready()
     {
         spawnersFolder = GetNode<Node>("Spawns");
+        playerSpawn = GetNode<Marker2D>("PlayerSpawn");
+
+        var player = (Player)playerScene.Instantiate();
+        player.Position = playerSpawn.Position;
+        AddChild(player);
+
+        var remoteTransform = new RemoteTransform2D();
+        remoteTransform.RemotePath = GetParent().GetNode<Camera2D>("Camera2D").GetPath();
+        player.AddChild(remoteTransform);
     }
 
     public virtual List<Spawner> GetSpawners(Vector2 playerPosition) => 

@@ -54,9 +54,8 @@ public static class GlobalSettings
 		public static float AttackSpeed = 1;
 		public static int Damage = 25;
 		public static int HP = 100;
-		public static int ZombieMinSpeed = 80;
-		public static int ZombieMaxSpeed = 160;
-		public static int DropChance = 10;
+		public static int AverageSpeed = 120;
+		public static int DropChance = 3;
 	}
 
 	public static class Difficulty
@@ -74,9 +73,8 @@ public static class GlobalSettings
 		{
 			Zombie.Damage = 25;
 			Zombie.HP = 100;
-			Zombie.ZombieMinSpeed = 80;
-			Zombie.ZombieMaxSpeed = 160;
-			Zombie.DropChance = 10;
+			Zombie.AverageSpeed = 120;
+			Zombie.DropChance = 3;
 
 			ZombieSpawnRate = 1;
 			ZombieSpawnRateIncrement = 2;

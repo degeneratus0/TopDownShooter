@@ -18,13 +18,14 @@ public partial class MobManager : Node
 
 	private Timer zombieTimer;
 	private Node zombieDeathSounds;
+	private int zombieDeathSoundsCount;
 	private Node zombieAmbientSounds;
+	private int zombieAmbientSoundsCount;
 
 	private Player player;
 	private Level level;
 	private UI ui;
 
-	private PackedScene ZombieScene;
 	private PackedScene BloodScene;
 
 	public override void _Ready()
@@ -33,10 +34,12 @@ public partial class MobManager : Node
 		zombieDeathSounds = GetNode<Node>("ZombieDeathSounds");
 		zombieAmbientSounds = GetNode<Node>("ZombieAmbientSounds");
 
-		ZombieScene = GD.Load<PackedScene>("res://Entities/Zombie/Zombie.tscn");
 		BloodScene = GD.Load<PackedScene>("res://Entities/Zombie/ZombieObjects/Blood.tscn");
 
 		soundTime = GD.RandRange(minSoundTime, maxSoundTime);
+
+		zombieDeathSoundsCount = zombieDeathSounds.GetChildCount();
+		zombieAmbientSoundsCount = zombieAmbientSounds.GetChildCount();
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -46,7 +49,7 @@ public partial class MobManager : Node
 			minSoundTime = 500 / liveZombiesCount;
 			maxSoundTime = 1000 / liveZombiesCount;
 			soundTime = GD.RandRange(minSoundTime, maxSoundTime);
-			zombieAmbientSounds.GetChild<AudioStreamPlayer>(Utilities.RandNum(zombieAmbientSounds.GetChildCount())).Play();
+			zombieAmbientSounds.GetChild<AudioStreamPlayer>(Utilities.RandNum(zombieAmbientSoundsCount - 1)).Play();
 		}
 
 		if (!GetTree().Paused)
@@ -72,7 +75,7 @@ public partial class MobManager : Node
 				return;
 			}
 
-			Zombie zombie = (Zombie)ZombieScene.Instantiate();
+			Zombie zombie = ScenePool<Zombie>.Take();
 			zombie.Position = spawners[GD.RandRange(0, spawners.Count - 1)].Position;
 			zombie.SetPlayer(player);
 
@@ -91,9 +94,11 @@ public partial class MobManager : Node
 		}
 	}
 
-	private void OnZombieKilled(Vector2 position, bool dropped)
+	private void OnZombieKilled(Zombie zombie, bool dropped)
 	{
-		AudioStreamPlayer audio = (AudioStreamPlayer)zombieDeathSounds.GetChild<AudioStreamPlayer>(Utilities.RandNum(zombieDeathSounds.GetChildCount())).Duplicate();
+		zombie.ZombieKilled -= OnZombieKilled;
+
+		AudioStreamPlayer audio = (AudioStreamPlayer)zombieDeathSounds.GetChild<AudioStreamPlayer>(Utilities.RandNum(zombieDeathSoundsCount - 1)).Duplicate();
 		audio.Autoplay = true;
 		audio.Finished += audio.QueueFree;
 
@@ -103,10 +108,10 @@ public partial class MobManager : Node
 		ui.UpdateScoreLabel(1);
 		if (dropped)
 		{
-			level.AddBonus(Bonus.GetRandomBonus(), position);
+			level.AddBonus(Bonus.GetRandomBonus(), zombie.Position);
 		}
 		Blood blood = (Blood)BloodScene.Instantiate();
-		blood.Position = position;
+		blood.Position = zombie.Position;
 		CallDeferred(Node.MethodName.AddChild, blood);
 	}
 }

@@ -272,6 +272,7 @@ radius = 35.0
 process_mode = 1
 z_index = 2
 z_as_relative = false
+scale = Vector2(0.5, 0.5)
 collision_layer = 9
 collision_mask = 17
 motion_mode = 1
@@ -360,8 +361,6 @@ stream = ExtResource("6_5hui5")
 stream = ExtResource("7_bhns4")
 
 [node name="ControlsContainer" type="Node2D" parent="."]
-z_index = 20
-z_as_relative = false
 
 [node name="HealthBar" type="TextureProgressBar" parent="ControlsContainer"]
 texture_filter = 1

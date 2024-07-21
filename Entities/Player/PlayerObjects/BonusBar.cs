@@ -3,19 +3,22 @@ using System;
 
 public partial class BonusBar : TextureProgressBar
 {
+	public Bonus Bonus;
+
 	private TextureProgressBar bar;
 	private Timer timer;
-	private BonusType bonusType;
 	private Action callback;
 
-	private Color color;
 	private int seconds;
 
-	public BonusBar(BonusType bonusType, int seconds, Color color, Action callback)
+	private static Vector2 position = new Vector2(-64, -64);
+	private static Vector2 size = new Vector2(64, 64);
+	private static Vector2 scale = new Vector2(2, 2);
+
+	public BonusBar(Bonus bonus, int seconds, Action callback)
 	{
-		this.bonusType = bonusType;
+		Bonus = bonus;
 		this.seconds = seconds;
-		this.color = color;
 		this.callback = callback;
 	}
 
@@ -27,11 +30,11 @@ public partial class BonusBar : TextureProgressBar
 		timer.Timeout += OnTimerTimeout;
 		AddChild(timer);
 
-		TintProgress = color;
+		TintProgress = Bonus.Color;
 		TextureProgress = (Texture2D)GD.Load("res://Assets/Arts/UI/BonusProgress.png");
-		Position = new Vector2(-64, -64);
-		Size = new Vector2(64, 64);
-		Scale = new Vector2(2, 2);
+		Position = position;
+		Size = size;
+		Scale = scale;
 		FillMode = (int)FillModeEnum.CounterClockwise;
 		Step = 0.1;
 
@@ -46,17 +49,13 @@ public partial class BonusBar : TextureProgressBar
 		Value = timer.TimeLeft;
 	}
 
+	public void Reset()
+	{
+		timer.Start(seconds);
+	}
+
 	private void OnTimerTimeout()
 	{
 		callback();
-	}
-
-	public void IsNewPicked(BonusType bonusType, Player player)
-	{
-		if (this.bonusType == bonusType)
-		{
-			player.BonusPicked -= IsNewPicked;
-			QueueFree();
-		}
 	}
 }

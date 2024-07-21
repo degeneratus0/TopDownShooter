@@ -1,6 +1,5 @@
-[gd_scene load_steps=13 format=3 uid="uid://wovt0jcpuy2r"]
+[gd_scene load_steps=12 format=3 uid="uid://wovt0jcpuy2r"]
 
-[ext_resource type="PackedScene" uid="uid://cn6ireg7mcdxn" path="res://Entities/Player/Player.tscn" id="1"]
 [ext_resource type="Script" path="res://World.cs" id="2"]
 [ext_resource type="AudioStream" uid="uid://d5xclf47hca" path="res://Assets/Sounds/ClipPick.wav" id="3"]
 [ext_resource type="PackedScene" uid="uid://d0rxuxbwnpt4" path="res://UI/UI.tscn" id="4"]
@@ -22,17 +21,10 @@ script = ExtResource("2")
 [node name="UI" parent="." instance=ExtResource("4")]
 process_mode = 3
 
-[node name="Player" parent="." instance=ExtResource("1")]
-position = Vector2(664, 216)
-scale = Vector2(0.5, 0.5)
-
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
-remote_path = NodePath("../../Camera2D")
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(664, 216)
 scale = Vector2(0.5, 0.5)
-zoom = Vector2(2, 2)
+zoom = Vector2(3.5, 3.5)
 
 [node name="Sounds" type="Node" parent="."]
 

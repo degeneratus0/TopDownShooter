@@ -23,7 +23,7 @@ public partial class UI : CanvasLayer
 
 	public void UpdateScoreLabel(int value)
 	{
-		score+=value;
+		score += value;
 		scoreLabel.Text = $"Score: {score}";
 	}
 

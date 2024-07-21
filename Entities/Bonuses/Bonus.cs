@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 public partial class Bonus : Pickable
 {
-	private BonusType bonusType;
-	public static List<PackedScene> BonusesScenes = new List<PackedScene>()
+	public Color Color;
+
+	private static List<PackedScene> bonusesScenes = new List<PackedScene>()
 		{
 			GD.Load<PackedScene>("res://Entities/Bonuses/BulletPack.tscn"),
 			GD.Load<PackedScene>("res://Entities/Bonuses/Aid.tscn"),
@@ -15,50 +16,20 @@ public partial class Bonus : Pickable
 			GD.Load<PackedScene>("res://Entities/Bonuses/Piercing.tscn")
 		};
 
-	public Bonus(BonusType bonusType)
-	{
-		this.bonusType = bonusType;
-	}
-
 	public static Bonus GetRandomBonus()
 	{
-		PackedScene bonusScene = Utilities.GetRandomSceneFromList(Bonus.BonusesScenes);
+		PackedScene bonusScene = Utilities.GetRandomSceneFromList(bonusesScenes);
 		return (Bonus)bonusScene.Instantiate();
 	}
 
-	public void DoBonus(Player player)
+	public virtual void DoBonus(Player player)
 	{
-		switch (bonusType)
-		{
-			case BonusType.BulletPack:
-				player.UpdateAmmo(GlobalSettings.Player.ClipSize);
-				break;
-			case BonusType.Aid:
-				player.ChangeHP(player.MaxHP);
-				break;
-			case BonusType.Armor:
-				player.AddArmor();
-				break;
-			case BonusType.DamageUp:
-				player.DamageUp(10, 5);
-				break;
-			case BonusType.SpeedUp:
-				player.SpeedUp(10, 1.5);
-				break;
-			case BonusType.Piercing:
-				player.PierceUp(10);
-				break;
-		}
+		return;
 	}
-}
 
-public enum BonusType
-{
-	BulletPack,
-	Aid,
-	Armor,
-	DamageUp,
-	SpeedUp,
-	Piercing
+	public virtual void UndoBonus(Player player)
+	{
+		return;
+	}
 }
 

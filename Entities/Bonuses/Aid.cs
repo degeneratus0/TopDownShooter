@@ -1,7 +1,14 @@
+using Godot;
+
 public partial class Aid : Bonus
 {
-	public Aid() : base(BonusType.Aid)
+	public Aid()
 	{
+		Color = Colors.White;
+	}
 
+	public override void DoBonus(Player player)
+	{
+		player.ChangeHP(player.MaxHealth);
 	}
 }

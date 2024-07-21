@@ -15,6 +15,6 @@ public static class Utilities
 
 	public static PackedScene GetRandomSceneFromList(List<PackedScene> packedScenesList)
 	{
-		return packedScenesList[Utilities.RandNum(packedScenesList.Count)];
+		return packedScenesList[RandNum(packedScenesList.Count)];
 	}
 }
